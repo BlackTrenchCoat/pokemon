@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering 
+    SYSTEM 
+    "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+
+<hibernate-reverse-engineering>
+	<schema-selection match-schema="POKEDEX2012" />
+
+	<type-mapping>
+		<sql-type jdbc-type="SMALLINT" hibernate-type="int" not-null="true">
+		</sql-type>
+		<sql-type jdbc-type="SMALLINT" hibernate-type="java.lang.Integer"
+			not-null="false">
+		</sql-type>
+	</type-mapping>
+
+	<table-filter match-name="abilities" package="pokedex" />
+	<table-filter match-name="ability_flavor_text" package="pokedex" />
+	<table-filter match-name="egg_groups" package="pokedex" />
+	<table-filter match-name="evolution_chains" package="pokedex" />
+	<table-filter match-name="experience" package="pokedex" />
+	<table-filter match-name="items" package="pokedex" />
+	<table-filter match-name="locations" package="pokedex" />
+	<table-filter match-name="move_battle_styles" package="pokedex" />
+	<table-filter match-name="move_damage_classes" package="pokedex" />
+    <table-filter match-name="move_effect_categories" package="pokedex" />
+	<table-filter match-name="move_effect_category_map" package="pokedex" />
+    <table-filter match-name="move_effect_prose" package="pokedex" />
+	<table-filter match-name="move_effects" package="pokedex" />
+	<table-filter match-name="move_flag_types" package="pokedex" />
+	<table-filter match-name="move_flags" package="pokedex" />
+	<table-filter match-name="move_flavor_text" package="pokedex" />
+	<table-filter match-name="move_targets" package="pokedex" />
+	<table-filter match-name="moves" package="pokedex" />
+	<table-filter match-name="natures" package="pokedex" />
+	<table-filter match-name="pokedexes" package="pokedex" />
+	<table-filter match-name="pokemon" package="pokedex" />
+	<table-filter match-name="pokemon_abilities" package="pokedex" />
+	<table-filter match-name="pokemon_colors" package="pokedex" />
+	<table-filter match-name="pokemon_dex_numbers" package="pokedex" />
+	<table-filter match-name="pokemon_egg_groups" package="pokedex" />
+	<table-filter match-name="pokemon_evolutions" package="pokedex" />
+	<table-filter match-name="pokemon_flavor_text" package="pokedex" />
+	<table-filter match-name="pokemon_habitats" package="pokedex" />
+	<table-filter match-name="pokemon_items" package="pokedex" />
+	<table-filter match-name="pokemon_move_methods" package="pokedex" />
+	<table-filter match-name="pokemon_moves" package="pokedex" />
+    <table-filter match-name="pokemon_species" package="pokedex" />
+    <table-filter match-name="pokemon_species_names" package="pokedex" />
+    <table-filter match-name="pokemon_stats" package="pokedex" />
+	<table-filter match-name="pokemon_types" package="pokedex" />
+	<table-filter match-name="regions" package="pokedex" />
+	<table-filter match-name="stats" package="pokedex" />
+	<table-filter match-name="type_efficacy" package="pokedex" />
+	<table-filter match-name="types" package="pokedex" />
+	<table-filter match-name="version_group_region" package="pokedex" />
+	<table-filter match-name="version_groups" package="pokedex" />
+	<table-filter match-name="versions" package="pokedex" />
+
+    <!-- Hibernate generates bad SQL syntax, apparently due to 'order'
+         being a reserved word, and since I'm not using this column anyway... -->
+
+    <table name="pokemon" catalog="pokedex2012">
+        <column name="order" exclude="true"/>
+    </table>
+
+</hibernate-reverse-engineering>

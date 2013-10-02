@@ -1,0 +1,21 @@
+Update Hibernate version?
+
+I tried 4.2.5.Final:
+
+    Error creating bean with name 
+    'org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor#0' 
+    defined in class path resource [META-INF/spring/applicationContext.xml]: Initialization 
+    of bean failed; nested exception is java.lang.NoClassDefFoundError: Lorg/hibernate/cache/CacheProvider;
+    
+    See http://stackoverflow.com/questions/578433/how-to-solve-lazy-initialization-exception-using-jpa-and-hibernate-as-provider
+
+Look into Hibernate console
+http://www.hibernate.org/subprojects/tools.html
+
+Is damage calculation output too low?
+
+Push git repo to GitHub.
+
+Accuracy - In Pokedex 2012, POKEMON_STATS does not have values for accuracy and evasion.  
+STATS.IS_BATTLE_ONLY is set to true for these two stats.
+So where do these 'battle only' values come from?

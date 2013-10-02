@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <description>Pokemon with 2012 Pokedex.</description>
+
+    <context:component-scan base-package="org.the_project.y2012" />
+    
+    <!-- Use autowiring -->
+    <context:annotation-config />
+    
+    <!-- Do exception translation for components annotated @Repository -->
+    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+    <context:property-placeholder location="classpath*:hibernate.properties"/>
+
+    <!-- Database access session factories -->
+
+    <bean id="pokemonSessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="pokemonDataSource" />
+        <property name="packagesToScan" value="org.the_project.y2012.pokemon" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="pokedexSessionFactory"
+        class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="pokedexDataSource" />
+        <property name="packagesToScan" value="pokedex" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <!-- DAOs -->
+    
+    <bean id="pokemonDAO" class="org.the_project.y2012.pokemon.model.PokemonDAOImpl"/>
+    <bean id="pokedexDAO" class="org.the_project.y2012.pokemon.model.PokedexDAOImpl"/>
+    
+    <!-- Data sources -->
+
+    <bean id="pokedexDataSource"
+        class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName"
+            value="${hibernate.connection.driver_class}" />
+        <property name="url"
+            value="${pokedex.connection.url}" />
+        <property name="username" value="${pokedex.connection.username}" />
+        <property name="password" value="${pokedex.connection.password}" />
+        <property name="initialSize" value="5" />
+        <property name="maxActive" value="10" />
+    </bean>
+
+    <bean id="pokemonDataSource"
+        class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName"
+            value="${hibernate.connection.driver_class}" />
+        <property name="url"
+            value="${pokemon.connection.url}" />
+        <property name="username" value="${pokemon.connection.username}" />
+        <property name="password" value="${pokemon.connection.password}" />
+        <property name="initialSize" value="5" />
+        <property name="maxActive" value="10" />
+    </bean>
+    
+    <!-- Transactions -->
+
+    <!-- enable the configuration of transactional behavior based on annotations -->
+    <tx:annotation-driven transaction-manager="pokedexTransactionManager"/>
+    <tx:annotation-driven transaction-manager="pokemonTransactionManager"/>
+
+    <bean id="pokedexTransactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="pokedexSessionFactory" />
+    </bean>
+
+    <!-- All access to the Pokedex DB is read-only -->
+    <tx:advice id="pokedexTxAdvice"
+        transaction-manager="pokedexTransactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="SUPPORTS" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <bean id="pokemonTransactionManager"
+        class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="pokemonSessionFactory" />
+    </bean>
+
+</beans>
