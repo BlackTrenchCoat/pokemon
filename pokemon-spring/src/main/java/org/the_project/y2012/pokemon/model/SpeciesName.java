@@ -17,5 +17,4 @@ public class SpeciesName {
     public String getName() {
         return name;
     }
-
 }
