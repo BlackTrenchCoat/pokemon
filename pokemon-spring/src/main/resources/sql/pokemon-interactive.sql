@@ -2,11 +2,6 @@
 
 select * from moves order by name;
 
-select m.name, me.short_effect, me.effect
-from moves m, move_effects me
-where m.effect_id = me.id
-order by m.name;
-
 select m.identifier, mep.short_effect, mep.effect
 from moves m, move_effect_prose mep
 where m.effect_id = mep.move_effect_id
