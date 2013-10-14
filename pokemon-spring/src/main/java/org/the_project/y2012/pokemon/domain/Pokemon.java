@@ -744,12 +744,26 @@ public class Pokemon extends PokemonEntity {
             logger.info("FocusEnergy not implemented yet.");
             break;
         case Foresight:
+            // Resets the target's [evasion]{mechanic:evasion} to normal and
+            // prevents any further boosting until the target leaves the
+            // [field]{mechanic:field}. A []{type:ghost} under this effect takes
+            // normal damage from []{type:normal} and []{type:fighting} moves.
+            // This move itself ignores [accuracy]{mechanic:accuracy} and
+            // [evasion]{mechanic:evasion} modifiers.
             logger.info("Foresight not implemented yet.");
             break;
         case Frustration:
+            // Inflicts [regular damage]{mechanic:regular-damage}. Power
+            // increases inversely with [happiness]{mechanic:happiness}, given
+            // by `(255 - happiness) * 2 / 5`, to a maximum of 102. Power
+            // bottoms out at 1.
             logger.info("Frustration not implemented yet.");
             break;
         case FuryCutter:
+            // Inflicts [regular damage]{mechanic:regular-damage}. Power doubles
+            // after every time this move is used, whether consecutively or not,
+            // maxing out at 16x. If this move misses or the user leaves the
+            // [field]{mechanic:field}, power resets.
             logger.info("FuryCutter not implemented yet.");
             break;
         case FutureSight:
@@ -1120,7 +1134,20 @@ public class Pokemon extends PokemonEntity {
             logger.info("Slash not implemented yet.");
             break;
         case SleepPowder:
-            logger.info("SleepPowder not implemented yet.");
+            // Puts the target to [sleep]{mechanic:sleep}.
+            // Effect
+            effectHappens = computeEffectChance(move);
+            if (effectHappens) {
+                if (defender.getNonVolatileStatus() == NonVolatileStatus.NOTHING) {
+                    logger.info("defender " + defender.getName() + " goes to sleep");
+                    defender.setNonVolatileStatus(NonVolatileStatus.SLEEP);
+                } else {
+                    logger.info("Can't put defender " + defender.getName()
+                            + " to sleep because defender already has a "
+                            + defender.getNonVolatileStatus() + " status");
+                }
+            }
+            
             break;
         case SleepTalk:
             logger.info("SleepTalk not implemented yet.");
