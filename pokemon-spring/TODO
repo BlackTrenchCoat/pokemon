@@ -16,6 +16,6 @@ Is damage calculation output too low?
 
 Push git repo to GitHub.
 
-Accuracy - In Pokedex 2012, POKEMON_STATS does not have values for accuracy and evasion.  
+Accuracy and evasion - In Pokedex 2012, POKEMON_STATS does not have values for accuracy and evasion.  
 STATS.IS_BATTLE_ONLY is set to true for these two stats.
 So where do these 'battle only' values come from?
