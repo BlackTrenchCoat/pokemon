@@ -23,10 +23,6 @@ To run the main program:
 
 mvn exec:java -Dexec.mainClass=pokemon.HibernatePokedexMain
 
-Get documentation about the hibernate3 Maven plugin (DOESN'T WORK):
-
-mvn help:describe -Dplugin=hibernate3-maven-plugin -Dfull
-
 Re-download dependencies:
 
 mvn dependency:purge-local-repository

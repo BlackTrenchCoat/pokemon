@@ -1,0 +1,16 @@
+This is my Spring and Hibernate playground.
+It's very much a work in progress.
+Some day, it's going to be an awesome Pokemon application, but it's nowhere near finished.
+
+See https://github.com/veekun/pokedex/wiki/Getting-Data for instructions to load the database.
+You'll also need to create an empty Pokemon database; see src/main/resources/sql.
+
+There are 2 main programs:
+
+InitializePopulation: Populate a database of randomly generated Pokemon, and their moves.
+
+Fight: Choose 2 Pokemon out of the above database and have them duel.
+
+What I eventually have in mind is a sort of Pokemon survival of the fittest arena, where
+I can create a large population of Pokemon and have them battle each other until a 
+supreme survivor claws his way to the top of a heap of fainted Pokemon.
