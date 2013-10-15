@@ -102,6 +102,6 @@
     </bean>
 
     <!-- Use AOP to do method logging -->
-    <aop:aspectj-autoproxy/>
+<!--     <aop:aspectj-autoproxy/> -->
     
 </beans>
