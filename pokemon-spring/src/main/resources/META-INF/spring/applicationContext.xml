@@ -101,4 +101,7 @@
         <property name="sessionFactory" ref="pokemonSessionFactory" />
     </bean>
 
+    <!-- Use AOP to do method logging -->
+    <aop:aspectj-autoproxy/>
+    
 </beans>
