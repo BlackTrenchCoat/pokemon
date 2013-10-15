@@ -40,6 +40,7 @@ create table pokemon (
 	level int,
 	color varchar(6),
 	exp int,
+	happiness int,
 	habitat varchar(16),
 	height int,
 	lock_on boolean,
