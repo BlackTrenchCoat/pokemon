@@ -16,26 +16,49 @@ public class Pokemon extends PokemonEntity {
 
     private static Logger logger = Logger.getLogger("Pokemon");
     
+    public static void battle(Pokemon p1, Pokemon p2) {
+        p1.setAccuracy(0);
+        p1.setEvasion(0);
+        p2.setAccuracy(0);
+        p2.setEvasion(0);
+        
+        while ((p1.getHp() > 0) && (p2.getHp() > 0)) {
+            // Whoever is faster attacks first
+            if (p1.getSpeed() > p2.getSpeed()) {
+                attack(p1, p2);
+                attack(p2, p1);
+            } else {
+                attack(p2, p1);
+                attack(p1, p2);
+            }
+        }
+        
+        if (p1.getHp() > 0) {
+            logger.info(p2.getName() + " faints!  " + p1.getName() + " wins!");
+        } else {
+            logger.info(p1.getName() + " faints!  " + p2.getName() + " wins!");
+        }
+    }
+    
 
     public static void attack(Pokemon attacker, Pokemon defender) {
         Set<Move> attackerMoves = attacker.getMoves();
         String attackerName = attacker.getName();
 
-        // Choose a move randomly
-        // TODO: This needs to check if the move has any PP remaining
-        Move move = (Move)attackerMoves.toArray()[rnd(attackerMoves.size())];
+        if (!attacker.hasAMoveWithPP()) {
+            logger.info(attacker.getName() + " has exhausted the PP of all his moves!  "
+                    + attacker.getName() + " stands there helplessly!");
+            return;
+        }
         
+        // Choose a move randomly
+        Move move = attacker.chooseRandomPoweredMove();
         logger.info(attackerName + " attacks " + defender.getName() + " with "
                 + move.getName());
 
-        // Check PP
-        if (move.getPp() > 0) {
-            // This DOES change the PP of the move in attacker.getMoves()
-            move.setPp(move.getPp() - 1);
-        } else {
-            logger.info("PP exhausted for move" + move.getName());
-            return;
-        }
+        // Charge the attacker one PP
+        // This DOES change the PP of the move in attacker.getMoves()
+        move.setPp(move.getPp() - 1);
 
         // Check accuracy
         if (!attacker.checkAccuracy(move)) { // or should checkAccuracy be
@@ -1535,4 +1558,31 @@ public class Pokemon extends PokemonEntity {
     private void faints() {
         logger.info(this.getName() + " faints!");
     }
+    
+    // Does this pokemon have a move that is not depleted?
+    private boolean hasAMoveWithPP() {
+        boolean result = false;
+        for (Move move : getMoves()) {
+            if (move.getPp() > 0) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+    
+    // Choose a random move which still has PP
+    // Assumes that some move still has PP
+    private Move chooseRandomPoweredMove() {
+        Move result = null;
+        Set<Move> poweredMoves = new HashSet<Move>();
+        for (Move move : getMoves()) {
+            if (move.getPp() > 0) {
+                poweredMoves.add(move);
+            }
+        }
+        result = (Move)poweredMoves.toArray()[rnd(poweredMoves.size())];
+        return result;
+    }
+    
 }

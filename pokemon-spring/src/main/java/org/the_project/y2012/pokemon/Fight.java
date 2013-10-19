@@ -58,7 +58,7 @@ public class Fight {
             }
         }
         
-        Pokemon.attack(pokemon[0], pokemon[1]);
+        Pokemon.battle(pokemon[0], pokemon[1]);
     }
 
 }

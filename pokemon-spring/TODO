@@ -9,13 +9,29 @@ I tried 4.2.5.Final:
     
     See http://stackoverflow.com/questions/578433/how-to-solve-lazy-initialization-exception-using-jpa-and-hibernate-as-provider
 
+	There's some general discussion of upgrading from Hibernate 3.x to Hibernate 4.x at 
+	http://spring.io/blog/2012/04/06/migrating-to-spring-3-1-and-hibernate-4-1/.
+
 Look into Hibernate console
 http://www.hibernate.org/subprojects/tools.html
 
 Is damage calculation output too low?
 
-Push git repo to GitHub.
+Q: Accuracy and evasion - In Pokedex 2012, POKEMON_STATS does not have values for accuracy and evasion.  
+   STATS.IS_BATTLE_ONLY is set to true for these two stats.
+   So where do these 'battle only' values come from?
+A: There's some discussion of this at http://faqs.neoseeker.com/Games/GBC/pokemon_ab.txt.
+   (Text search to [M05] Accuracy and Evade).
+   Accuracy and Evade of a Pokemon function like the stats, except Accuracy and Evade are initialized 
+   to zero at the beginning of a battle, where the other stats are initialized to values from the Pokedex.
+   So, there's probably no need to persist accuracy and evasion in the Pokemon database.
 
-Accuracy and evasion - In Pokedex 2012, POKEMON_STATS does not have values for accuracy and evasion.  
-STATS.IS_BATTLE_ONLY is set to true for these two stats.
-So where do these 'battle only' values come from?
+Q: Replace conditional with polymorphism in the big switch statement in Pokemon.doMove()?
+A: I think I'll hold off on this for a while, at least until most of the moves are defined.
+   This would work best if a move could be reduced to a neat modular definition, but many
+   moves have complex effects that span multiple turns.
+
+Add sex to Pokemon schema and entity and use gender appropriate pronouns
+
+What to do if two Pokemon battle and they both exhaust the PP of all their moves?
+

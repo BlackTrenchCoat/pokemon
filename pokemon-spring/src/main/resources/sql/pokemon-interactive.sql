@@ -1,6 +1,6 @@
 -- POKEDEX
 
-select * from moves order by name;
+select * from moves order by identifier;
 
 select m.identifier, mep.short_effect, mep.effect
 from moves m, move_effect_prose mep
