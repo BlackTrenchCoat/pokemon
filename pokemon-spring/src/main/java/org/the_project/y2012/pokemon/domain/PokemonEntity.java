@@ -56,7 +56,10 @@ public class PokemonEntity {
     int hp;
     @Column(name = "max_hp")
     int maxHp;
+    
+    @Transient
     int accuracy;
+    @Transient
     int evasion;
     
     // End of stats

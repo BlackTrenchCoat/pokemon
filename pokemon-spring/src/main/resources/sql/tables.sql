@@ -34,8 +34,6 @@ create table pokemon (
 	hp int,
 	max_hp int,
 	speed int,
-	accuracy int,
-	evasion int,
 	-- end stats
 	level int,
 	color varchar(6),
