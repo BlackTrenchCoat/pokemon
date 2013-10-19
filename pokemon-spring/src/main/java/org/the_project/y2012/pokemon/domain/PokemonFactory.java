@@ -33,6 +33,7 @@ public class PokemonFactory {
         result = new Pokemon();
 
         result.pokedexId = randomPokemon.getId();
+        result.happiness = randomPokemon.getBaseHappiness();
         
         HeightWeight heightWeight = pokedexDAO.getHeightWeight(result.pokedexId);
         result.height = heightWeight.getHeight();

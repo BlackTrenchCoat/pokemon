@@ -38,6 +38,7 @@ public class PokemonEntity {
     String type1;
     String type2;
     String species;
+    int happiness;
     String color;
     String habitat;
 
@@ -360,6 +361,14 @@ public class PokemonEntity {
 
     public void setLeechSeed(boolean leechSeed) {
         this.leechSeed = leechSeed;
+    }
+
+    public int getHappiness() {
+        return happiness;
+    }
+
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
     }
 
 }
