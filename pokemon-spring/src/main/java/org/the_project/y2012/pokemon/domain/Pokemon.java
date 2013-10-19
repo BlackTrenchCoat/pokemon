@@ -22,7 +22,10 @@ public class Pokemon extends PokemonEntity {
         p2.setAccuracy(0);
         p2.setEvasion(0);
         
-        while ((p1.getHp() > 0) && (p2.getHp() > 0)) {
+        // The battle continues until one of the Pokemon has fainted, or until
+        // both have run out of moves
+        while ((p1.getHp() > 0) && (p2.getHp() > 0)
+                && (p1.hasAMoveWithPP() || p2.hasAMoveWithPP())) {
             // Whoever is faster attacks first
             if (p1.getSpeed() > p2.getSpeed()) {
                 attack(p1, p2);
@@ -33,11 +36,14 @@ public class Pokemon extends PokemonEntity {
             }
         }
         
-        if (p1.getHp() > 0) {
-            logger.info(p2.getName() + " faints!  " + p1.getName() + " wins!");
+        if (p1.getHp() <= 0) {
+            logger.info(p1.getName() + " fainted!  " + p2.getName() + " wins!");
+        } else if (p2.getHp() <= 0) {
+            logger.info(p2.getName() + " fainted!  " + p1.getName() + " wins!");
         } else {
-            logger.info(p1.getName() + " faints!  " + p2.getName() + " wins!");
+            logger.info("Both pokemon exhausted the PP of all their moves!  It's a draw!");
         }
+        
     }
     
 
