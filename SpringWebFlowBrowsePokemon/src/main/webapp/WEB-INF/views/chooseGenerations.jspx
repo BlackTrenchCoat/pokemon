@@ -2,8 +2,8 @@
 <jsp:root
 	xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
-	xmlns:form="http://www.springframework.org/tags/form">
+	xmlns:form="http://www.springframework.org/tags/form"
+    version="2.0">
 	<jsp:directive.page
 		language="java" contentType="text/html; charset=UTF-8"
 		pageEncoding="UTF-8" />
@@ -20,7 +20,7 @@
 </head>
 <body>
 
-	<form method="post">
+	<form:form method="post" modelAttribute="pokemon">
 
 		<table>
 
@@ -28,7 +28,7 @@
 				<td>Generation(s)</td>
                 <td>
                     <c:forEach var="item" items="${pokemon.pokemonGenerationNames.keySet()}">
-                        <form:checkbox path="pokemon.generations" value="${item}" />
+                        <form:checkbox path="generations" value="${item}" />
                         <c:out value="${pokemon.pokemonGenerationNames.get(item)}" />
                         <br />
                     </c:forEach>
@@ -38,6 +38,6 @@
 		</table>
 
 		<input type="submit" name="_eventId_toSecond" value="Choose generation(s)" />
-	</form>
+	</form:form>
 </body>
 	</html></jsp:root>
