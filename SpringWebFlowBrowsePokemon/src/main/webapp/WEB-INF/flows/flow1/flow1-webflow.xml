@@ -16,13 +16,12 @@
         - On receiving the toSecond event, transition to the "second" 
         state.
         - On receiving the toThird event, transition to the "third" state. -->
-    <view-state id="start" view="chooseGenerations">
+    <view-state id="start" view="chooseGenerations" model="pokemon">
         <on-entry>
             <set name="flowScope.pokemon.pokemonGenerationNames" 
                 value="pokedexService.getPokemonGenerationNames()"/>
         </on-entry>
         <transition on="toSecond" to="second" />
-        <transition on="toThird" to="third" />
     </view-state>
     <!--Similar to the above view state, but for the secondView. -->
     <view-state id="second" view="secondView">
