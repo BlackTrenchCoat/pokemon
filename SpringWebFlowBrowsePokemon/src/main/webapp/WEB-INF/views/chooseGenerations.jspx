@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions" version="2.0"
+	xmlns:form="http://www.springframework.org/tags/form">
+	<jsp:directive.page
+		language="java" contentType="text/html; charset=UTF-8"
+		pageEncoding="UTF-8" />
+		<jsp:text>
+		<![CDATA[ <?xml version="1.0" encoding="UTF-8" ?> ]]>
+	</jsp:text>
+	<jsp:text>
+		<![CDATA[ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> ]]>
+	</jsp:text>
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Choose Generation(s)</title>
+</head>
+<body>
+
+	<form method="post">
+
+		<table>
+
+			<tr>
+				<td>Generation(s)</td>
+                <td>
+                    <c:forEach var="item" items="${pokemon.pokemonGenerationNames.keySet()}">
+                        <form:checkbox path="pokemon.generations" value="${item}" />
+                        <c:out value="${pokemon.pokemonGenerationNames.get(item)}" />
+                        <br />
+                    </c:forEach>
+                </td>
+			</tr>
+
+		</table>
+
+		<input type="submit" name="_eventId_toSecond" value="Choose generation(s)" />
+	</form>
+</body>
+	</html></jsp:root>

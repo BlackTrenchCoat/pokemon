@@ -1,0 +1,68 @@
+Generate DBRE .hbm.xml files.  
+This step isn't necessary, might be helpful for debugging.
+
+mvn hibernate3:hbm2hbmxml
+
+Generate Java classes
+
+mvn hibernate3:hbm2java
+
+Compile:
+
+mvn compile
+
+To create target/hibernate3/generated-mappings/hibernate.cfg.xml:
+
+mvn hibernate3:hbm2cfgxml
+
+Typical build:
+
+mvn clean hibernate3:hbm2java compile hibernate3:hbm2cfgxml
+
+Re-download dependencies:
+
+mvn dependency:purge-local-repository
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On entering the first view, chooseGenerations.jspx, I'd like for pokemonGenerations
+to be defined (referring to EditController.getPokemonGenerationNames()).
+In straight Spring MVC, the way to do this was to annotate getPokemonGenerationNames()
+with @ModelAttribute("pokemonGenerations"), but that isn't working.
+
+You can define a variable, but how to initialize its value (to the result of 
+calling a DAO method) before the 'start' state in the flow is called?
+
+What is the command object?  In RooSpringWebPokemon it's PokemonFormBean.
+Every @RequestMapping updated "pokemon" with a PokemonFormBean.
+Use <view-state ... model="..."> for this?
+
+In regular Spring MVC, every view is designated in the output of a @RequestPokedexServiceImplMapping.
+
+In Spring Web Flow, does the command object concept apply?
+
+I tried the following:
+  Put a var in the flow for PokedexServiceImpl
+  PokedexServiceImpl gets a PokedexDAO dependency-injected into it
+  PokedexDAO gets a Hibernate sessionFactory dependency-injected into it
+  Thus, before the 'start' element of the flow is called, PokedexServiceImpl is all configured
+    and ready to perform the database query and return the generations map
+Great idea, but it doesn't work.
+  Everything in the flowScope needs to be serializable, including dependency-injected instance variables.
+  I can make PokedexDAO serializable, but not sessionFactory.
+I tried making PokedexDAOImpl.sessionFactory 'transient', nope.
+The error says 'make sure all objects stored in flow or flash scope are serializable'
+What about using one of the other scopes?
+  I tried putting the variable in conversationScope and requestScope, still the same error
+  
+This has to be something people do all the time... e.g. page 1 of the flow is a menu
+that came from the database via ORM.
+
+Can an action state come before the first view state?
+  This doesn't help that much, because, still, how can I call PokedexServiceImpl.getPokemonGenerationNames()
+  if there is not a variable in the flow bound to PokedexServiceImpl?  How can I instantiate 
+  PokedexServiceImpl other than as a variable in the flow scope (just declaring it the application context
+  should work), then get access to it from a <set> or <evaluate> expression?
+  
+The action state is irrelevant.  Just declare PokedexServiceImpl in the application context, then refer
+to it in the flow <set> or <evaluate> expression.
