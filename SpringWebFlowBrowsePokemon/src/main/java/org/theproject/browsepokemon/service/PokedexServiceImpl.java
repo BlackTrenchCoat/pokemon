@@ -12,7 +12,7 @@ public class PokedexServiceImpl implements PokedexService, Serializable {
     
     private static final long serialVersionUID = 2172441576698845339L;
 
-    private static transient Logger logger = LoggerFactory.getLogger(PokedexServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(PokedexServiceImpl.class);
     
     @Autowired
     private PokedexDAO pokedexDAO;
