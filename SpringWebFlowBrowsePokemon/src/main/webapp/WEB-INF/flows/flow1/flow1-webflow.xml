@@ -23,8 +23,12 @@
         </on-entry>
         <transition on="toSecond" to="second" />
     </view-state>
-    <!--Similar to the above view state, but for the secondView. -->
-    <view-state id="second" view="secondView">
+    <!--Similar to the above view state, but for the chooseSpecies. -->
+    <view-state id="second" view="chooseSpecies">
+        <on-entry>
+            <set name="flowScope.pokemon.species"
+                value="pokedexService.getPokemonSpeciesNames(flowScope.pokemon.generations)"/>
+        </on-entry>
         <transition on="toStart" to="start" />
         <transition on="toThird" to="third" />
     </view-state>

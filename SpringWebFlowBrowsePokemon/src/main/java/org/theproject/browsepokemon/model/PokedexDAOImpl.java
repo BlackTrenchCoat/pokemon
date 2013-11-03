@@ -3,6 +3,7 @@ package org.theproject.browsepokemon.model;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import org.hibernate.Query;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import pokedex.PokemonSpecies;
 
 @Repository
 @Transactional
@@ -66,6 +69,23 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
         }
     	return result;
     }
+    
+    private static final String SPECIES_QUERY = 
+            "select ps " 
+                    + "from PokemonSpecies ps, Generations g " 
+                    + "where ps.generations.id = g.id " 
+                    + "and g.identifier in :generations " 
+                    + "order by ps.identifier";
+
+    public List<PokemonSpecies> getPokemonSpeciesForGenerations(
+            Set<java.lang.String> generations) {
+        Query query = currentSession()
+                .createQuery(SPECIES_QUERY)
+                .setParameterList("generations", generations);
+        List<PokemonSpecies> result = (List<PokemonSpecies>)query.list();
+        return result;
+    }
+    
 
 }
 

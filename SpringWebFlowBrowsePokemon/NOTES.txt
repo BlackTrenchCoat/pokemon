@@ -53,7 +53,7 @@ Great idea, but it doesn't work.
 I tried making PokedexDAOImpl.sessionFactory 'transient', nope.
 The error says 'make sure all objects stored in flow or flash scope are serializable'
 What about using one of the other scopes?
-  I tried putting the variable in conversationScope and requestScope, still the same error
+  I tried putting the variable in conversationScope and requestScope, still the same errortool
   
 This has to be something people do all the time... e.g. page 1 of the flow is a menu
 that came from the database via ORM.
@@ -66,3 +66,35 @@ Can an action state come before the first view state?
   
 The action state is irrelevant.  Just declare PokedexServiceImpl in the application context, then refer
 to it in the flow <set> or <evaluate> expression.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If I change the <form> tag to <form:form>, it gets an error like
+Neither BindingResult nor plain target object for bean name 'command' available as request attribute
+It seems like if I am using the Spring form tag, it wants the commandName/modelAttribute set
+appropriately.  I understand how to use this in a plain vanilla Spring MVC but how does it fit into
+Web Flow?  My impression is Web Flow doesn't use this, instead you declare a variable in the flow
+file to carry the input data.  I may look into this more later.  Changing it back to <form> for now.
+
+See
+http://forum.spring.io/forum/spring-projects/web/web-flow/84681-reference-a-flowscope-as-a-modelattribute-in-spring-mvc-form-form-tag
+http://docs.spring.io/spring-webflow/docs/2.3.x/spring-webflow-reference/htmlsingle/spring-webflow-reference.html#view-model
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q: How to handle the input from page 1 form?
+Sort of looks like PokemonFormBean.setGenerations() isn't getting called as a result of this in the
+first view:
+<form:checkbox path="pokemon.generations" value="${item}" />
+A: Bind the view-state to the PokemonFormBean as a model as described above
+<view-state id="start" view="chooseGenerations" model="pokemon">
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+So, move computations from the controller (Spring MVC) to the flow (e.g., <on-entry> <set ...> 
+statements) (Spring Web Flow).
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Q: Coming into <view-state id="chooseSpecies" .../>, where are the generations that were chosen?
+A: Right there in PokemonFormBean.generations.
