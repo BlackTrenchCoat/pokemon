@@ -85,7 +85,6 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
         List<PokemonSpecies> result = (List<PokemonSpecies>)query.list();
         return result;
     }
-    
 
 }
 
