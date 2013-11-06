@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <table>
+    <table border="1">
     <tr><td>Id</td><td><c:out value="${pokemon.speciesId}"/></td></tr>
     <tr><td>Name</td><td><c:out value="${pokemon.pokemonDisplayObject.name}"/></td></tr>
 
