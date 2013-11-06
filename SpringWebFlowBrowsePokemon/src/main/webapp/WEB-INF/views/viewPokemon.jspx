@@ -2,6 +2,7 @@
 <jsp:root
 	xmlns:jsp="http://java.sun.com/JSP/Page" 
     xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:form="http://www.springframework.org/tags/form"
     version="2.0">
 	<jsp:directive.page
 		language="java" contentType="text/html; charset=UTF-8"
@@ -16,6 +17,7 @@
 <title>View Pokemon</title>
 </head>
 <body>
+    <form:form method="post" modelAttribute="pokemon">
 
     <table border="1">
     <tr><td>Id</td><td><c:out value="${pokemon.speciesId}"/></td></tr>
@@ -30,6 +32,9 @@
     <tr><td>Habitat</td><td><c:out value="${pokemon.pokemonDisplayObject.habitat}"/></td></tr>
 
     </table>
+
+    <input type="submit" name="_eventId_toStart" value="Back To Start" />
+    </form:form>
 
 </body>
     </html>
