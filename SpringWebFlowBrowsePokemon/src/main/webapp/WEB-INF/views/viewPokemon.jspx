@@ -15,32 +15,47 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>View Pokemon</title>
-<style>
-table
-{
-    border-collapse:collapse;
-}
-
-table, td
-{
-    border: 1px solid black;
-}
-</style>
 </head>
 <body>
     <form:form method="post" modelAttribute="pokemon">
+    
+        <table>
+            <tr>
+                <td>Generation(s)</td>
+                <td>
+                    <c:forEach var="item" items="${pokemon.pokemonGenerationNames.keySet()}">
+                        <form:checkbox path="generations" value="${item}" />
+                        <c:out value="${pokemon.pokemonGenerationNames.get(item)}" />
+                        <br />
+                    </c:forEach>
+                </td>
+            </tr>
 
-    <table>
-    <tr><td>Id</td><td><c:out value="${pokemon.speciesId}"/></td></tr>
-    <tr><td>Name</td><td><c:out value="${pokemon.pokemonDisplayObject.name}"/></td></tr>
-    <tr><td>Height</td><td><c:out value="${pokemon.pokemonDisplayObject.height}"/></td></tr>
-    <tr><td>Weight</td><td><c:out value="${pokemon.pokemonDisplayObject.weight}"/></td></tr>
-    <tr><td>Base Experience</td><td><c:out value="${pokemon.pokemonDisplayObject.baseExperience}"/></td></tr>
-    <tr><td>Base Happiness</td><td><c:out value="${pokemon.pokemonDisplayObject.baseHappiness}"/></td></tr>
-    <tr><td>Color</td><td><c:out value="${pokemon.pokemonDisplayObject.color}"/></td></tr>
-    <tr><td>Shape</td><td><c:out value="${pokemon.pokemonDisplayObject.shape}"/></td></tr>
-    <tr><td>Habitat</td><td><c:out value="${pokemon.pokemonDisplayObject.habitat}"/></td></tr>
+            <tr>
+                <td>Species</td>
+                <td><form:select path="speciesId">
+                        <form:options items="${pokemon.species}" />
+                    </form:select></td>
+            </tr>
+
+            <tr>
+                <td valign="top">Data for <c:out value="${pokemon.pokemonDisplayObject.name}"/></td>
+                <td>
+
+    <table border="1" cellspacing="0">
+    <tr><td>Id</td><td align="right"><c:out value="${pokemon.speciesId}"/></td></tr>
+    <tr><td>Height</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.height}"/></td></tr>
+    <tr><td>Weight</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.weight}"/></td></tr>
+    <tr><td>Base Experience</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.baseExperience}"/></td></tr>
+    <tr><td>Base Happiness</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.baseHappiness}"/></td></tr>
+    <tr><td>Color</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.color}"/></td></tr>
+    <tr><td>Shape</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.shape}"/></td></tr>
+    <tr><td>Habitat</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.habitat}"/></td></tr>
     </table>
+    
+                </td>
+            </tr>
+        </table>
 
     <input type="submit" name="_eventId_toStart" value="Back To Start" />
     </form:form>
