@@ -23,14 +23,6 @@ public class PokedexServiceImpl implements PokedexService, Serializable {
     @Autowired
     private PokedexDAO pokedexDAO;
 
-    public Map<String, String> getPokemonGenerationNames() {
-	    
-	    logger.info("In getPokemonGenerationNames()...");
-	    
-        Map<String, String> result = pokedexDAO.getPokemonGenerationNames();
-        return result;
-    }
-    
     public Map<Integer, String> getPokemonSpeciesNames(Set<java.lang.String> generations) {
 
         logger.info("In getPokemonSpeciesNames()...");
@@ -45,10 +37,4 @@ public class PokedexServiceImpl implements PokedexService, Serializable {
         return result;
     }
 
-    public PokemonDisplayObject getDisplayObject(Integer id) {
-        logger.info("In getDisplayObject()...");
-        PokemonDisplayObject result = pokedexDAO.getDisplayObject(id);
-        return result;
-    }
-    
 }

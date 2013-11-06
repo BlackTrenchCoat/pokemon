@@ -10,7 +10,7 @@
     <view-state id="start" view="chooseGenerations" model="pokemon">
         <on-entry>
             <set name="flowScope.pokemon.pokemonGenerationNames" 
-                value="pokedexService.getPokemonGenerationNames()"/>
+                value="pokedexDAO.getPokemonGenerationNames()"/>
         </on-entry>
         <transition on="toSecond" to="second" />
     </view-state>
@@ -28,7 +28,7 @@
     <view-state id="third" view="viewPokemon" model="pokemon">
         <on-entry>
             <set name="flowScope.pokemon.pokemonDisplayObject"
-                value="pokedexService.getDisplayObject(flowScope.pokemon.speciesId)"/>
+                value="pokedexDAO.getDisplayObject(flowScope.pokemon.speciesId)"/>
         </on-entry>
         <transition on="toStart" to="start" />
     </view-state>

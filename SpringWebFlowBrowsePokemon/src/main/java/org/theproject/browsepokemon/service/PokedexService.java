@@ -7,9 +7,6 @@ import org.theproject.browsepokemon.PokemonDisplayObject;
 
 public interface PokedexService {
 
-    public Map<String, String> getPokemonGenerationNames();
-
     public Map<Integer, String> getPokemonSpeciesNames(Set<java.lang.String> generations);
 
-    public PokemonDisplayObject getDisplayObject(Integer id);
 }
