@@ -7,15 +7,6 @@
     
     <var name="pokemon" class="org.theproject.browsepokemon.PokemonFormBean"/>
     
-    <!--Note that the start-state is specified using an attribute 
-        of the <flow> element above. -->
-        
-        <!--A view state is a step of the flow that renders a view. This 
-        state displays the startView and configures the two available transitions 
-        from the startView:
-        - On receiving the toSecond event, transition to the "second" 
-        state.
-        - On receiving the toThird event, transition to the "third" state. -->
     <view-state id="start" view="chooseGenerations" model="pokemon">
         <on-entry>
             <set name="flowScope.pokemon.pokemonGenerationNames" 
@@ -23,8 +14,9 @@
         </on-entry>
         <transition on="toSecond" to="second" />
     </view-state>
+
     <!--Similar to the above view state, but for the chooseSpecies. -->
-    <view-state id="second" view="chooseSpecies">
+    <view-state id="second" view="chooseSpecies" model="pokemon">
         <on-entry>
             <set name="flowScope.pokemon.species"
                 value="pokedexService.getPokemonSpeciesNames(flowScope.pokemon.generations)"/>
@@ -32,7 +24,19 @@
         <transition on="toStart" to="start" />
         <transition on="toThird" to="third" />
     </view-state>
+
+    <view-state id="third" view="viewPokemon" model="pokemon">
+        <on-entry>
+            <set name="flowScope.pokemon.pokemonDisplayObject"
+                value="pokedexService.getDisplayObject(flowScope.pokemon.speciesId)"/>
+        </on-entry>
+        <transition on="toStart" to="start" />
+    </view-state>
+
+
     <!--The final state of the flow in which an outcome of the 
         flow can be defined.  A flow may have multiple <end-state> elements. -->
-    <end-state id="third" view="thirdView" />
+    <!-- 
+    <end-state id="third" view="viewPokemon"/>
+    -->
 </flow>

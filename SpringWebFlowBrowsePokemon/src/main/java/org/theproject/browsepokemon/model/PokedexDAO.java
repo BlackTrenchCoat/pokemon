@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.theproject.browsepokemon.PokemonDisplayObject;
+
 import pokedex.PokemonSpecies;
 
 public interface PokedexDAO {
@@ -12,4 +14,5 @@ public interface PokedexDAO {
 	
     public List<PokemonSpecies> getPokemonSpeciesForGenerations(Set<java.lang.String> generations);
 
+    public PokemonDisplayObject getDisplayObject(Integer id);
 }

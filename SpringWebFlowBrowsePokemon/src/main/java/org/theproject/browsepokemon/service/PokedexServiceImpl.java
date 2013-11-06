@@ -9,6 +9,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.theproject.browsepokemon.PokemonDisplayObject;
 import org.theproject.browsepokemon.model.PokedexDAO;
 
 import pokedex.PokemonSpecies;
@@ -44,4 +45,10 @@ public class PokedexServiceImpl implements PokedexService, Serializable {
         return result;
     }
 
+    public PokemonDisplayObject getDisplayObject(Integer id) {
+        logger.info("In getDisplayObject()...");
+        PokemonDisplayObject result = pokedexDAO.getDisplayObject(id);
+        return result;
+    }
+    
 }

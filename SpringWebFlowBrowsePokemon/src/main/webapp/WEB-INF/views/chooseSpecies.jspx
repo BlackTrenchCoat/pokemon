@@ -20,7 +20,7 @@
 </head>
 <body>
 
-    <form method="post" modelAttribute="pokemon">
+    <form:form method="post" modelAttribute="pokemon">
 
         <table>
 
@@ -28,7 +28,7 @@
                 <td>Generation(s)</td>
                 <td>
                     <c:forEach var="item" items="${pokemon.pokemonGenerationNames.keySet()}">
-                        <form:checkbox path="pokemon.generations" value="${item}" />
+                        <form:checkbox path="generations" value="${item}" />
                         <c:out value="${pokemon.pokemonGenerationNames.get(item)}" />
                         <br />
                     </c:forEach>
@@ -37,16 +37,17 @@
 
             <tr>
                 <td>Pokemon Species</td>
-                <td><form:select path="pokemon.speciesId">
+                <td><form:select path="speciesId">
                         <form:options items="${pokemon.species}" />
                     </form:select></td>
             </tr>
 
         </table>
 
-		<input type="submit" name="_eventId_toStart" value="Back To Start" /><input
-			type="submit" name="_eventId_toThird" value="To Third View" />
-	</form>
+		<input type="submit" name="_eventId_toStart" value="Back To Start" />
+        <input type="submit" name="_eventId_toThird" value="View Pokemon" />
+
+	</form:form>
 </body>
 	</html>
 </jsp:root>

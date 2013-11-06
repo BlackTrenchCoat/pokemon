@@ -48,6 +48,7 @@
 	<table-filter match-name="pokemon_move_methods" package="pokedex" />
 	<table-filter match-name="pokemon_moves" package="pokedex" />
     <table-filter match-name="pokemon_species" package="pokedex" />
+    <table-filter match-name="pokemon_shapes" package="pokedex" />
     <table-filter match-name="pokemon_species_names" package="pokedex" />
     <table-filter match-name="pokemon_stats" package="pokedex" />
 	<table-filter match-name="pokemon_types" package="pokedex" />

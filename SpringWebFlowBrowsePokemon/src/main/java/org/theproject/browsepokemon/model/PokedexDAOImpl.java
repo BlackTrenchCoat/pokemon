@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.theproject.browsepokemon.PokemonDisplayObject;
 
 import pokedex.PokemonSpecies;
 
@@ -86,5 +87,35 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
         return result;
     }
 
+    private static final String DISPLAY_QUERY =
+            "select p.height, p.weight, p.baseExperience, "
+                    + "species.identifier, species.baseHappiness, "
+                    + "pc.identifier, shapes.identifier, ph.identifier "
+                    + "from Pokemon p, PokemonSpecies species, PokemonColors pc, "
+                    + "PokemonShapes shapes, PokemonHabitats ph "
+                    + "where p.pokemonSpecies.id = :id "
+                    + "and p.pokemonSpecies.id = species.id "
+                    + "and species.pokemonColors.id = pc.id "
+                    + "and species.pokemonShapes.id = shapes.id "
+                    + "and species.pokemonHabitats.id = ph.id";
+    
+    public PokemonDisplayObject getDisplayObject(Integer id) {
+        Object[] row = (Object[])currentSession()
+                .createQuery(DISPLAY_QUERY)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .uniqueResult();
+        return new PokemonDisplayObject(
+                (String)row[3], // name
+                (Integer)row[0], // height
+                (Integer)row[1], // weight
+                (Integer)row[2], // base experience
+                (Integer)row[4], // base happiness
+                (String)row[5], // color
+                (String)row[6], // shape
+                (String)row[7] // habitat
+                );
+    }
+    
 }
 
