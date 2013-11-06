@@ -90,13 +90,18 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
     private static final String DISPLAY_QUERY =
             "select p.height, p.weight, p.baseExperience, "
                     + "species.identifier, species.baseHappiness, "
-                    + "pc.identifier, shapes.identifier, ph.identifier "
+                    + "pc.identifier, shapes.identifier "
                     + "from Pokemon p, PokemonSpecies species, PokemonColors pc, "
-                    + "PokemonShapes shapes, PokemonHabitats ph "
+                    + "PokemonShapes shapes "
                     + "where p.pokemonSpecies.id = :id "
                     + "and p.pokemonSpecies.id = species.id "
                     + "and species.pokemonColors.id = pc.id "
-                    + "and species.pokemonShapes.id = shapes.id "
+                    + "and species.pokemonShapes.id = shapes.id";
+    
+    private static final String HABITAT_QUERY =
+            "select ph.identifier "
+                    + "from PokemonSpecies species, PokemonHabitats ph "
+                    + "where species.id = :id "
                     + "and species.pokemonHabitats.id = ph.id";
     
     public PokemonDisplayObject getDisplayObject(Integer id) {
@@ -105,7 +110,7 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
                 .setParameter("id", id)
                 .setMaxResults(1)
                 .uniqueResult();
-        return new PokemonDisplayObject(
+        PokemonDisplayObject result = new PokemonDisplayObject(
                 (String)row[3], // name
                 (Integer)row[0], // height
                 (Integer)row[1], // weight
@@ -113,8 +118,19 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
                 (Integer)row[4], // base happiness
                 (String)row[5], // color
                 (String)row[6], // shape
-                (String)row[7] // habitat
+                null // habitat
                 );
+        // Special handling for habitat because pokemon_species.habitat_id = null
+        // for some Black/White Pokemon
+        String habitat = (String)currentSession()
+                .createQuery(HABITAT_QUERY)
+                .setParameter("id", id)
+                .setMaxResults(1)
+                .uniqueResult();
+        if (habitat != null) {
+            result.setHabitat(habitat);
+        }
+        return result;
     }
     
 }
