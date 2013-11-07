@@ -1,5 +1,7 @@
 This is my Spring Web Flow playground.
 
+It uses Spring Core, MVC and Web Flow with Hibernate.
+
 This could use a little polish and I'm still tinkering with it a bit, but it's more or less fully functional.
 
 See https://github.com/veekun/pokedex/wiki/Getting-Data for instructions to load the database.
