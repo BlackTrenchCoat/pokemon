@@ -51,6 +51,15 @@
     <tr><td>Color</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.color}"/></td></tr>
     <tr><td>Shape</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.shape}"/></td></tr>
     <tr><td>Habitat</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.habitat}"/></td></tr>
+    
+    
+    <tr><td>HP</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.hp}"/></td></tr>
+    <tr><td>Attack</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.attack}"/></td></tr>
+    <tr><td>Defense</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.defense}"/></td></tr>
+    <tr><td>Special Attack</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.specialAttack}"/></td></tr>
+    <tr><td>Special Defense</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.specialDefense}"/></td></tr>
+    <tr><td>Speed</td><td align="right"><c:out value="${pokemon.pokemonDisplayObject.speed}"/></td></tr>
+
     </table>
     
                 </td>

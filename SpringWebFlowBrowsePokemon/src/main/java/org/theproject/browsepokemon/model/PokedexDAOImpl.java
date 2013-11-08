@@ -1,6 +1,7 @@
 package org.theproject.browsepokemon.model;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -117,8 +118,7 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
                 (Integer)row[2], // base experience
                 (Integer)row[4], // base happiness
                 (String)row[5], // color
-                (String)row[6], // shape
-                null // habitat
+                (String)row[6] // shape
                 );
         // Special handling for habitat because pokemon_species.habitat_id = null
         // for some Black/White Pokemon
@@ -130,8 +130,40 @@ public class PokedexDAOImpl implements PokedexDAO, Serializable {
         if (habitat != null) {
             result.setHabitat(habitat);
         }
+        // Get stats
+        getStats(id, result);        
         return result;
     }
+
+    private static final String STATS_QUERY = 
+            "select s.identifier, ps.baseStat "
+                    + "from PokemonStats ps, Stats s " 
+                    + "where ps.id.pokemonId = :id "
+                    + "and ps.id.statId = s.id";
+
+    private void getStats(Integer id, PokemonDisplayObject result) {
+        Query query = currentSession().createQuery(STATS_QUERY).setParameter("id", id);
+        List<Object[]> rowList = query.list();
+        for (Object[] row : rowList) {
+            String name = (String) row[0];
+            Integer baseStat = (Integer) row[1];
+            if (name.equals("hp")) {
+                result.setHp(baseStat);
+            } else if (name.equals("attack")) {
+                result.setAttack(baseStat);
+            } else if (name.equals("defense")) {
+                result.setDefense(baseStat);
+            } else if (name.equals("special-attack")) {
+                result.setSpecialAttack(baseStat);
+            } else if (name.equals("special-defense")) {
+                result.setSpecialDefense(baseStat);
+            } else if (name.equals("speed")) {
+                result.setSpeed(baseStat);
+            }
+        }
+    }
+    
+    
     
 }
 

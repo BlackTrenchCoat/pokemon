@@ -36,7 +36,7 @@ where p.species_id = 626 -- bouffalant
 and p.species_id = pspecies.id
 and pspecies.color_id = pc.id
 and pspecies.shape_id = pshapes.id
-and (pspecies.habitat_id is null or pspecies.habitat_id = ph.id);
+and (pspecies.habitat_id = ph.id or pspecies.habitat_id is null);
 
 select * from pokemon where id = 626;
 
@@ -87,3 +87,20 @@ select species.id, species.identifier, ph.identifier
 from pokemon_species species right outer join pokemon_habitats ph
 on species.habitat_id = ph.id
 and species.id = 626;
+
+-- Add stats.  Also, do habitat separately.
+
+select p.species_id, p.height, p.weight, p.base_experience, 
+pspecies.identifier, pspecies.base_happiness,
+pc.identifier, pshapes.identifier
+from pokemon p, pokemon_species pspecies, pokemon_colors pc, pokemon_shapes pshapes
+where p.species_id = 626 -- bouffalant
+and p.species_id = pspecies.id
+and pspecies.color_id = pc.id
+and pspecies.shape_id = pshapes.id;
+
+select 
+from pokemon_species species, pokemon_stats stats 
+where species.id = stats.
+
+
