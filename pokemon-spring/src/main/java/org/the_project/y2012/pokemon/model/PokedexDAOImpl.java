@@ -53,19 +53,15 @@ public class PokedexDAOImpl implements PokedexDAO {
                         Restrictions.eq("generationId", new Integer(2))));
         result = (List<PokemonSpecies>)criteria.list();
 
-//        Criteria criteria = currentSession().createCriteria(pokedex.Pokemon.class).add(
-//                Restrictions.or(Restrictions.eq("generationId", new Integer(1)),
-//                        Restrictions.eq("generationId", new Integer(2))));
-
-        // Query query = session.createQuery("from Pokemon");
-//        result = (List<Pokemon>)criteria.list();
         logger.info(result.size() + " pokemon in the pokedex.");
         return result;
     }
 
-    private static final String typesQuery = "select t.identifier, pt.id.slot "
-            + "from PokemonTypes pt, Types t " + "where pt.id.pokemonId = :id "
-            + "and pt.types.id = t.id";
+    private static final String typesQuery = 
+            "select t.identifier, pt.id.slot "
+                    + "from PokemonTypes pt, Types t " 
+                    + "where pt.id.pokemonId = :id "
+                    + "and pt.types.id = t.id";
 
     public String[] getTypes(int id) {
         String[] result = null;
@@ -80,9 +76,11 @@ public class PokedexDAOImpl implements PokedexDAO {
         return result;
     }
 
-    private static final String statsQuery = "select s.identifier, ps.baseStat "
-            + "from PokemonStats ps, Stats s " + "where ps.id.pokemonId = :id "
-            + "and ps.id.statId = s.id";
+    private static final String statsQuery = 
+            "select s.identifier, ps.baseStat "
+                    + "from PokemonStats ps, Stats s " 
+                    + "where ps.id.pokemonId = :id "
+                    + "and ps.id.statId = s.id";
 
     public Map<String, Integer> getStats(int id) {
         HashMap<String, Integer> result = null;
