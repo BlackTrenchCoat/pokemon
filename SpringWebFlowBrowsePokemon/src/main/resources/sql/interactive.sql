@@ -99,8 +99,6 @@ and p.species_id = pspecies.id
 and pspecies.color_id = pc.id
 and pspecies.shape_id = pshapes.id;
 
-select 
-from pokemon_species species, pokemon_stats stats 
-where species.id = stats.
-
-
+select * from stat_names
+where local_language_id = 9
+order by stat_id;
