@@ -1,16 +1,32 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'io.spring.gradle:dependency-management-plugin:0.5.3.RELEASE'
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
     maven { url "https://repo.spring.io/libs-release" }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'io.spring.platform:platform-bom:2.0.0.RELEASE'
+    }
+}
+
 dependencies {
-    compile 'org.springframework:spring-core:4.2.3.RELEASE'
-    compile 'org.springframework:spring-context:4.2.3.RELEASE'
-    compile 'org.springframework:spring-aspects:4.2.3.RELEASE'
-    compile 'org.springframework:spring-orm:4.2.3.RELEASE'
+    compile 'org.springframework:spring-core'
+    compile 'org.springframework:spring-context'
+    compile 'org.springframework:spring-aspects'
+    compile 'org.springframework:spring-orm'
     compile 'org.hibernate:hibernate-core:3.6.10.Final'
     compile 'org.slf4j:slf4j-log4j12:1.6.4'
     compile 'junit:junit:4.11'
