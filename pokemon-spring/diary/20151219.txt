@@ -1,0 +1,544 @@
+How do you do database reverse engineering in Gradle?
+
+This doesn't seem very well documented.  Here's the page for the
+Hibernate Tools plugin:
+
+    https://github.com/institut-de-genomique/hibernatetools-gradle-plugin
+
+What is 'database section inside build.gradle file'?  Does build.gradle
+usually have one of these, or is this something special just for the
+plugin?
+
+I don't see anything about this at
+https://docs.gradle.org/current/userguide/userguide.html.
+
+There is more documentation about the database section further down on
+the page.
+
+    database {
+        basePackage = "com.project.database.model"
+        url         = "jdbc:mysql://localhost:3306/pokedex2012"
+        user        = "pokedex2012"
+        password    = "pokedex"
+    }
+
+
+    $ gradle hbm2dao
+    Changed strategy of configuration ':reveng' after it has been resolved. This behaviour has been deprecated and is scheduled to be removed in Gradle 3.0        
+    > Building 0% > :hibernate-config
+    == User definition ==
+    ========
+    :hibernate-config FAILED
+    
+    FAILURE: Build failed with an exception.
+    
+    * What went wrong:
+    Execution failed for task ':hibernate-config'.
+    > Could not find property 'basePackage' on root project 'pokemon-2012-spring'.
+
+Change basePackage to the package where I want it to generate the
+classes...
+
+    database {
+        basePackage = "pokedex"
+        url         = "jdbc:mysql://localhost:3306/pokedex2012"
+        user        = "pokedex2012"
+        password    = "pokedex"
+    }
+
+A different error:
+
+    $ gradle hbm2dao
+    Changed strategy of configuration ':reveng' after it has been resolved. This behaviour has been deprecated and is scheduled to be removed in Gradle 3.0
+    :hibernate-config
+    :hbm2java
+    [ant:hibernatetool] [main] INFO org.hibernate.cfg.reveng.OverrideRepository - Override file: /home/lmulcahy/git/pokemon-2012/pokemon-spring/build/generated/src/resources/hibernate.reveng.xml
+    HHH000223: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/. Use namespace http://www.hibernate.org/dtd/ instead. Refer to Hibernate 3.6 Migration Guide!
+    [ant:hibernatetool] [main] ERROR org.hibernate.cfg.reveng.OverrideRepository - Could not configure overrides from input stream
+    [ant:hibernatetool] org.dom4j.DocumentException: Error on line 8 of document  : XML document structures must start and end within the same entity. Nested exception: XML document structures must start and end within the same entity.
+    [ant:hibernatetool] 	at org.dom4j.io.SAXReader.read(SAXReader.java:482)
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addInputStream(OverrideRepository.java:145)
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addFile(OverrideRepository.java:113)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.JDBCConfigurationTask.doConfiguration(JDBCConfigurationTask.java:63)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ConfigurationTask.getConfiguration(ConfigurationTask.java:55)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.getConfiguration(HibernateToolTask.java:302)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.getProperties(HibernateToolTask.java:318)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ExporterTask.configureExporter(ExporterTask.java:94)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.Hbm2JavaExporterTask.configureExporter(Hbm2JavaExporterTask.java:34)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ExporterTask.execute(ExporterTask.java:39)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.execute(HibernateToolTask.java:186)
+    [ant:hibernatetool] 	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.performTask(AntBuilder.java:327)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.nodeCompleted(AntBuilder.java:272)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.ant.BasicAntBuilder.nodeCompleted(BasicAntBuilder.java:78)
+    [ant:hibernatetool] 	at groovy.util.BuilderSupport.doInvokeMethod(BuilderSupport.java:149)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.doInvokeMethod(AntBuilder.java:207)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.ant.BasicAntBuilder.doInvokeMethod(BasicAntBuilder.java:93)
+    [ant:hibernatetool] 	at groovy.util.BuilderSupport.invokeMethod(BuilderSupport.java:66)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeOnDelegationObjects(ClosureMetaClass.java:430)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:371)
+    [ant:hibernatetool] 	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:69)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:174)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask$_hbm2java_closure1.doCall(Hbm2JavaTask.groovy:59)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:93)
+    [ant:hibernatetool] 	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:325)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:294)
+    [ant:hibernatetool] 	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+    [ant:hibernatetool] 	at groovy.lang.Closure.call(Closure.java:426)
+    [ant:hibernatetool] 	at groovy.lang.Closure.call(Closure.java:442)
+    [ant:hibernatetool] 	at org.gradle.api.internal.ClosureBackedAction.execute(ClosureBackedAction.java:67)
+    [ant:hibernatetool] 	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:130)
+    [ant:hibernatetool] 	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:91)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.AbstractProject.ant(AbstractProject.java:816)
+    [ant:hibernatetool] 	at org.gradle.api.Project$ant$5.call(Unknown Source)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:48)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:113)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask.hbm2java(Hbm2JavaTask.groovy:54)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask$hbm2java.callCurrent(Unknown Source)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:166)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask.run(Hbm2JavaTask.groovy:50)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:75)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.doExecute(AnnotationProcessingTaskFactory.java:227)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:220)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:209)
+    [ant:hibernatetool] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:585)
+    [ant:hibernatetool] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:568)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeAction(ExecuteActionsTaskExecuter.java:80)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:61)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:46)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.PostExecutionAnalysisTaskExecuter.execute(PostExecutionAnalysisTaskExecuter.java:35)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:64)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:58)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:52)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:52)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:53)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:203)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:185)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.processTask(AbstractTaskPlanExecutor.java:66)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.run(AbstractTaskPlanExecutor.java:50)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor.process(DefaultTaskPlanExecutor.java:25)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter.execute(DefaultTaskGraphExecuter.java:110)
+    [ant:hibernatetool] 	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.access$000(DefaultBuildExecuter.java:23)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter$1.proceed(DefaultBuildExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:32)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:30)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$4.run(DefaultGradleLauncher.java:154)
+    [ant:hibernatetool] 	at org.gradle.internal.Factories$1.create(Factories.java:22)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:52)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.doBuildStages(DefaultGradleLauncher.java:151)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.access$200(DefaultGradleLauncher.java:32)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:99)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:93)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:62)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.doBuild(DefaultGradleLauncher.java:93)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.run(DefaultGradleLauncher.java:82)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter$DefaultBuildController.run(InProcessBuildActionExecuter.java:94)
+    [ant:hibernatetool] 	at org.gradle.tooling.internal.provider.ExecuteBuildActionRunner.run(ExecuteBuildActionRunner.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ChainingBuildActionRunner.run(ChainingBuildActionRunner.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:77)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:47)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:51)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.RunBuildAction.run(RunBuildAction.java:43)
+    [ant:hibernatetool] 	at org.gradle.internal.Actions$RunnableActionAdapter.execute(Actions.java:170)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:237)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:210)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:24)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:206)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:169)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:33)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:22)
+    [ant:hibernatetool] 	at org.gradle.launcher.Main.doAction(Main.java:33)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.EntryPoint.run(EntryPoint.java:45)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.runNoExit(ProcessBootstrap.java:54)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.run(ProcessBootstrap.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.GradleMain.main(GradleMain.java:23)
+    [ant:hibernatetool] Nested exception:
+    [ant:hibernatetool] org.xml.sax.SAXParseException; lineNumber: 8; columnNumber: 1; XML document structures must start and end within the same entity.
+    [ant:hibernatetool] 	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1239)
+    [ant:hibernatetool] 	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:649)
+    [ant:hibernatetool] 	at org.dom4j.io.SAXReader.read(SAXReader.java:465)
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addInputStream(OverrideRepository.java:145)
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addFile(OverrideRepository.java:113)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.JDBCConfigurationTask.doConfiguration(JDBCConfigurationTask.java:63)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ConfigurationTask.getConfiguration(ConfigurationTask.java:55)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.getConfiguration(HibernateToolTask.java:302)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.getProperties(HibernateToolTask.java:318)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ExporterTask.configureExporter(ExporterTask.java:94)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.Hbm2JavaExporterTask.configureExporter(Hbm2JavaExporterTask.java:34)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ExporterTask.execute(ExporterTask.java:39)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.execute(HibernateToolTask.java:186)
+    [ant:hibernatetool] 	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.performTask(AntBuilder.java:327)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.nodeCompleted(AntBuilder.java:272)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.ant.BasicAntBuilder.nodeCompleted(BasicAntBuilder.java:78)
+    [ant:hibernatetool] 	at groovy.util.BuilderSupport.doInvokeMethod(BuilderSupport.java:149)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.doInvokeMethod(AntBuilder.java:207)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.ant.BasicAntBuilder.doInvokeMethod(BasicAntBuilder.java:93)
+    [ant:hibernatetool] 	at groovy.util.BuilderSupport.invokeMethod(BuilderSupport.java:66)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeOnDelegationObjects(ClosureMetaClass.java:430)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:371)
+    [ant:hibernatetool] 	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:69)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:174)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask$_hbm2java_closure1.doCall(Hbm2JavaTask.groovy:59)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:93)
+    [ant:hibernatetool] 	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:325)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:294)
+    [ant:hibernatetool] 	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+    [ant:hibernatetool] 	at groovy.lang.Closure.call(Closure.java:426)
+    [ant:hibernatetool] 	at groovy.lang.Closure.call(Closure.java:442)
+    [ant:hibernatetool] 	at org.gradle.api.internal.ClosureBackedAction.execute(ClosureBackedAction.java:67)
+    [ant:hibernatetool] 	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:130)
+    [ant:hibernatetool] 	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:91)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.AbstractProject.ant(AbstractProject.java:816)
+    [ant:hibernatetool] 	at org.gradle.api.Project$ant$5.call(Unknown Source)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:48)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:113)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask.hbm2java(Hbm2JavaTask.groovy:54)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask$hbm2java.callCurrent(Unknown Source)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:166)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask.run(Hbm2JavaTask.groovy:50)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:75)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.doExecute(AnnotationProcessingTaskFactory.java:227)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:220)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:209)
+    [ant:hibernatetool] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:585)
+    [ant:hibernatetool] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:568)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeAction(ExecuteActionsTaskExecuter.java:80)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:61)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:46)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.PostExecutionAnalysisTaskExecuter.execute(PostExecutionAnalysisTaskExecuter.java:35)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:64)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:58)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:52)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:52)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:53)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:203)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:185)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.processTask(AbstractTaskPlanExecutor.java:66)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.run(AbstractTaskPlanExecutor.java:50)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor.process(DefaultTaskPlanExecutor.java:25)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter.execute(DefaultTaskGraphExecuter.java:110)
+    [ant:hibernatetool] 	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.access$000(DefaultBuildExecuter.java:23)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter$1.proceed(DefaultBuildExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:32)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:30)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$4.run(DefaultGradleLauncher.java:154)
+    [ant:hibernatetool] 	at org.gradle.internal.Factories$1.create(Factories.java:22)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:52)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.doBuildStages(DefaultGradleLauncher.java:151)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.access$200(DefaultGradleLauncher.java:32)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:99)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:93)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:62)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.doBuild(DefaultGradleLauncher.java:93)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.run(DefaultGradleLauncher.java:82)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter$DefaultBuildController.run(InProcessBuildActionExecuter.java:94)
+    [ant:hibernatetool] 	at org.gradle.tooling.internal.provider.ExecuteBuildActionRunner.run(ExecuteBuildActionRunner.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ChainingBuildActionRunner.run(ChainingBuildActionRunner.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:77)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:47)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:51)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.RunBuildAction.run(RunBuildAction.java:43)
+    [ant:hibernatetool] 	at org.gradle.internal.Actions$RunnableActionAdapter.execute(Actions.java:170)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:237)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:210)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:24)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:206)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:169)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:33)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:22)
+    [ant:hibernatetool] 	at org.gradle.launcher.Main.doAction(Main.java:33)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.EntryPoint.run(EntryPoint.java:45)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.runNoExit(ProcessBootstrap.java:54)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.run(ProcessBootstrap.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.GradleMain.main(GradleMain.java:23)
+    [ant:hibernatetool] [main] ERROR org.hibernate.cfg.reveng.OverrideRepository - Could not configure overrides from file: /home/lmulcahy/git/pokemon-2012/pokemon-spring/build/generated/src/resources/hibernate.reveng.xml
+    [ant:hibernatetool] org.hibernate.MappingException: org.dom4j.DocumentException: Error on line 8 of document  : XML document structures must start and end within the same entity. Nested exception: XML document structures must start and end within the same entity.
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addInputStream(OverrideRepository.java:155)
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addFile(OverrideRepository.java:113)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.JDBCConfigurationTask.doConfiguration(JDBCConfigurationTask.java:63)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ConfigurationTask.getConfiguration(ConfigurationTask.java:55)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.getConfiguration(HibernateToolTask.java:302)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.getProperties(HibernateToolTask.java:318)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ExporterTask.configureExporter(ExporterTask.java:94)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.Hbm2JavaExporterTask.configureExporter(Hbm2JavaExporterTask.java:34)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.ExporterTask.execute(ExporterTask.java:39)
+    [ant:hibernatetool] 	at org.hibernate.tool.ant.HibernateToolTask.execute(HibernateToolTask.java:186)
+    [ant:hibernatetool] 	at org.apache.tools.ant.UnknownElement.execute(UnknownElement.java:292)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.apache.tools.ant.dispatch.DispatchUtils.execute(DispatchUtils.java:106)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.performTask(AntBuilder.java:327)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.nodeCompleted(AntBuilder.java:272)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.ant.BasicAntBuilder.nodeCompleted(BasicAntBuilder.java:78)
+    [ant:hibernatetool] 	at groovy.util.BuilderSupport.doInvokeMethod(BuilderSupport.java:149)
+    [ant:hibernatetool] 	at groovy.util.AntBuilder.doInvokeMethod(AntBuilder.java:207)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.ant.BasicAntBuilder.doInvokeMethod(BasicAntBuilder.java:93)
+    [ant:hibernatetool] 	at groovy.util.BuilderSupport.invokeMethod(BuilderSupport.java:66)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeOnDelegationObjects(ClosureMetaClass.java:430)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:371)
+    [ant:hibernatetool] 	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.callCurrent(PogoMetaClassSite.java:69)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:174)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask$_hbm2java_closure1.doCall(Hbm2JavaTask.groovy:59)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.codehaus.groovy.reflection.CachedMethod.invoke(CachedMethod.java:93)
+    [ant:hibernatetool] 	at groovy.lang.MetaMethod.doMethodInvoke(MetaMethod.java:325)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.metaclass.ClosureMetaClass.invokeMethod(ClosureMetaClass.java:294)
+    [ant:hibernatetool] 	at groovy.lang.MetaClassImpl.invokeMethod(MetaClassImpl.java:1019)
+    [ant:hibernatetool] 	at groovy.lang.Closure.call(Closure.java:426)
+    [ant:hibernatetool] 	at groovy.lang.Closure.call(Closure.java:442)
+    [ant:hibernatetool] 	at org.gradle.api.internal.ClosureBackedAction.execute(ClosureBackedAction.java:67)
+    [ant:hibernatetool] 	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:130)
+    [ant:hibernatetool] 	at org.gradle.util.ConfigureUtil.configure(ConfigureUtil.java:91)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.AbstractProject.ant(AbstractProject.java:816)
+    [ant:hibernatetool] 	at org.gradle.api.Project$ant$5.call(Unknown Source)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:48)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:113)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:125)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask.hbm2java(Hbm2JavaTask.groovy:54)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask$hbm2java.callCurrent(Unknown Source)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCallCurrent(CallSiteArray.java:52)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:154)
+    [ant:hibernatetool] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.callCurrent(AbstractCallSite.java:166)
+    [ant:hibernatetool] 	at org.hibernate.gradle.tools.Hbm2JavaTask.run(Hbm2JavaTask.groovy:50)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:75)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.doExecute(AnnotationProcessingTaskFactory.java:227)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:220)
+    [ant:hibernatetool] 	at org.gradle.api.internal.project.taskfactory.AnnotationProcessingTaskFactory$StandardTaskAction.execute(AnnotationProcessingTaskFactory.java:209)
+    [ant:hibernatetool] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:585)
+    [ant:hibernatetool] 	at org.gradle.api.internal.AbstractTask$TaskActionWrapper.execute(AbstractTask.java:568)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeAction(ExecuteActionsTaskExecuter.java:80)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeActions(ExecuteActionsTaskExecuter.java:61)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:46)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.PostExecutionAnalysisTaskExecuter.execute(PostExecutionAnalysisTaskExecuter.java:35)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipUpToDateTaskExecuter.execute(SkipUpToDateTaskExecuter.java:64)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ValidatingTaskExecuter.execute(ValidatingTaskExecuter.java:58)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipEmptySourceFilesTaskExecuter.execute(SkipEmptySourceFilesTaskExecuter.java:52)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:52)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:53)
+    [ant:hibernatetool] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:203)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:185)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.processTask(AbstractTaskPlanExecutor.java:66)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.run(AbstractTaskPlanExecutor.java:50)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor.process(DefaultTaskPlanExecutor.java:25)
+    [ant:hibernatetool] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter.execute(DefaultTaskGraphExecuter.java:110)
+    [ant:hibernatetool] 	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.access$000(DefaultBuildExecuter.java:23)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter$1.proceed(DefaultBuildExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:32)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+    [ant:hibernatetool] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:30)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$4.run(DefaultGradleLauncher.java:154)
+    [ant:hibernatetool] 	at org.gradle.internal.Factories$1.create(Factories.java:22)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:52)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.doBuildStages(DefaultGradleLauncher.java:151)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.access$200(DefaultGradleLauncher.java:32)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:99)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher$1.create(DefaultGradleLauncher.java:93)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:90)
+    [ant:hibernatetool] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:62)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.doBuild(DefaultGradleLauncher.java:93)
+    [ant:hibernatetool] 	at org.gradle.initialization.DefaultGradleLauncher.run(DefaultGradleLauncher.java:82)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter$DefaultBuildController.run(InProcessBuildActionExecuter.java:94)
+    [ant:hibernatetool] 	at org.gradle.tooling.internal.provider.ExecuteBuildActionRunner.run(ExecuteBuildActionRunner.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ChainingBuildActionRunner.run(ChainingBuildActionRunner.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:43)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.InProcessBuildActionExecuter.execute(InProcessBuildActionExecuter.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:77)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.ContinuousBuildActionExecuter.execute(ContinuousBuildActionExecuter.java:47)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:51)
+    [ant:hibernatetool] 	at org.gradle.launcher.exec.DaemonUsageSuggestingBuildActionExecuter.execute(DaemonUsageSuggestingBuildActionExecuter.java:28)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.RunBuildAction.run(RunBuildAction.java:43)
+    [ant:hibernatetool] 	at org.gradle.internal.Actions$RunnableActionAdapter.execute(Actions.java:170)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:237)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$ParseAndBuildAction.execute(CommandLineActionFactory.java:210)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.JavaRuntimeValidationAction.execute(JavaRuntimeValidationAction.java:24)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:206)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.CommandLineActionFactory$WithLogging.execute(CommandLineActionFactory.java:169)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:33)
+    [ant:hibernatetool] 	at org.gradle.launcher.cli.ExceptionReportingAction.execute(ExceptionReportingAction.java:22)
+    [ant:hibernatetool] 	at org.gradle.launcher.Main.doAction(Main.java:33)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.EntryPoint.run(EntryPoint.java:45)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    [ant:hibernatetool] 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    [ant:hibernatetool] 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    [ant:hibernatetool] 	at java.lang.reflect.Method.invoke(Method.java:497)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.runNoExit(ProcessBootstrap.java:54)
+    [ant:hibernatetool] 	at org.gradle.launcher.bootstrap.ProcessBootstrap.run(ProcessBootstrap.java:35)
+    [ant:hibernatetool] 	at org.gradle.launcher.GradleMain.main(GradleMain.java:23)
+    [ant:hibernatetool] Caused by: org.dom4j.DocumentException: Error on line 8 of document  : XML document structures must start and end within the same entity. Nested exception: XML document structures must start and end within the same entity.
+    [ant:hibernatetool] 	at org.dom4j.io.SAXReader.read(SAXReader.java:482)
+    [ant:hibernatetool] 	at org.hibernate.cfg.reveng.OverrideRepository.addInputStream(OverrideRepository.java:145)
+    [ant:hibernatetool] 	... 127 more
+    [ant:hibernatetool] An exception occurred while running exporter #2:hbm2java (Generates a set of .java files)
+    [ant:hibernatetool] To get the full stack trace run ant with -verbose
+    [ant:hibernatetool] org.hibernate.MappingException: Could not configure overrides from file: /home/lmulcahy/git/pokemon-2012/pokemon-spring/build/generated/src/resources/hibernate.reveng.xml
+    [ant:hibernatetool] org.hibernate.MappingException: org.dom4j.DocumentException: Error on line 8 of document  : XML document structures must start and end within the same entity. Nested exception: XML document structures must start and end within the same entity.
+    org.dom4j.DocumentException: Error on line 8 of document  : XML document structures must start and end within the same entity. Nested exception: XML document structures must start and end within the same entity.
+    :hbm2java FAILED
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    Execution failed for task ':hbm2java'.
+    > org.hibernate.MappingException: Could not configure overrides from file: /home/lmulcahy/git/pokemon-2012/pokemon-spring/build/generated/src/resources/hibernate.reveng.xml
+
+Progress...
+
+It's finding fault on an XML level with my perfectly good
+hibernate.reveng.xml.
+
+No, wait, my reveng file is src/main/resources/pokedex.reveng.xml.
+hibernate.reveng.xml was created by the hibernate tools plugin.
+
+Here is the entirety of that:
+
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE hibernate-reverse-engineering
+        SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+
+    <hibernate-reverse-engineering>
+
+        <schema-selection match-catalog =".*" match-schema=".*" match-table=".*"/>
+
+Yup, it's wrong.
+
+Can I get it looking at my reveng file?
+
+Example at
+
+    https://github.com/institut-de-genomique/hibernatetools-gradle-plugin/blob/master/example/build.gradle,
+
+but it doesn't help.
+
+Here's a guy doing this a completely different way:
+
+    https://stackoverflow.com/questions/20527877/using-custom-templates-with-hibernate-tools-reverse-engineering-from-gradle#20528107
+
+A guy trying to use this plugin who couldn't get it to work, no answers:
+
+    https://stackoverflow.com/questions/32779554/gradle-hbm2java-not-generating-pojos
+
+A recent blog about doing this in Eclipse:
+
+    http://j2yogi.blogspot.in/2015/09/hbm2dao-auto-generate-pojo-model-and.html
+
+This is another thing I ought to learn.  How would this be as a
+solution, just doing the DBRE in Eclipse?  
+
+After another reading of the doc page (specifically the 'catalog' part),
+I wonder if this plugin is going to insist on generating its own reveng
+file, instead of allowing me to use my painstakingly crafted existing
+reveng file?
+
+    $ gradle hibernate-config
+    Changed strategy of configuration ':reveng' after it has been resolved. This behaviour has been deprecated and is scheduled to be removed in Gradle 3.0
+    > Building 0% > :hibernate-config
+    == User definition ==
+    ========
+    :hibernate-config FAILED
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    Execution failed for task ':hibernate-config'.
+    > Could not find property 'basePackage' on root project 'pokemon-2012-spring'.
+
+
+    $ gradle hbm2java
+    Changed strategy of configuration ':reveng' after it has been resolved. This behaviour has been deprecated and is scheduled to be removed in Gradle 3.0
+    > Building 0% > :hibernate-config
+    == User definition ==
+    ========
+    :hibernate-config FAILED
+
+    FAILURE: Build failed with an exception.
+
+    * What went wrong:
+    Execution failed for task ':hibernate-config'.
+    > Could not find property 'basePackage' on root project 'pokemon-2012-spring'.
+
+I was thinking the basePackage error went away, but it's still here.
+
