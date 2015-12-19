@@ -32,3 +32,12 @@ dependencies {
     compile 'org.slf4j:slf4j-log4j12'
     testCompile 'junit:junit'
 }
+
+database {
+    basePackage = "pokedex"
+    url         = "jdbc:mysql://localhost:3306/pokedex2012"
+    user        = "pokedex2012"
+    password    = "pokedex"
+    driver      = "com.mysql.jdbc.Driver"
+    dialect     = "org.hibernate.dialect.MySQL5InnoDBDialect"
+}
