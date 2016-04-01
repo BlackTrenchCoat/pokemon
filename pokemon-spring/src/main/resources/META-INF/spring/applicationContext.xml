@@ -53,29 +53,30 @@
     
     <!-- Data sources -->
 
-    <bean id="pokedexDataSource"
-        class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName"
-            value="${hibernate.connection.driver_class}" />
-        <property name="url"
-            value="${pokedex.connection.url}" />
-        <property name="username" value="${pokedex.connection.username}" />
-        <property name="password" value="${pokedex.connection.password}" />
-        <property name="initialSize" value="5" />
-        <property name="maxActive" value="10" />
-    </bean>
+    <!-- moved to ApplicationContext.java -->
+<!--     <bean id="pokedexDataSource" -->
+<!--         class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!--         <property name="driverClassName" -->
+<!--             value="${hibernate.connection.driver_class}" /> -->
+<!--         <property name="url" -->
+<!--             value="${pokedex.connection.url}" /> -->
+<!--         <property name="username" value="${pokedex.connection.username}" /> -->
+<!--         <property name="password" value="${pokedex.connection.password}" /> -->
+<!--         <property name="initialSize" value="5" /> -->
+<!--         <property name="maxActive" value="10" /> -->
+<!--     </bean> -->
 
-    <bean id="pokemonDataSource"
-        class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName"
-            value="${hibernate.connection.driver_class}" />
-        <property name="url"
-            value="${pokemon.connection.url}" />
-        <property name="username" value="${pokemon.connection.username}" />
-        <property name="password" value="${pokemon.connection.password}" />
-        <property name="initialSize" value="5" />
-        <property name="maxActive" value="10" />
-    </bean>
+<!--     <bean id="pokemonDataSource" -->
+<!--         class="org.apache.commons.dbcp.BasicDataSource"> -->
+<!--         <property name="driverClassName" -->
+<!--             value="${hibernate.connection.driver_class}" /> -->
+<!--         <property name="url" -->
+<!--             value="${pokemon.connection.url}" /> -->
+<!--         <property name="username" value="${pokemon.connection.username}" /> -->
+<!--         <property name="password" value="${pokemon.connection.password}" /> -->
+<!--         <property name="initialSize" value="5" /> -->
+<!--         <property name="maxActive" value="10" /> -->
+<!--     </bean> -->
     
     <!-- Transactions -->
 

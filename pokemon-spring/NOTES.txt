@@ -28,3 +28,12 @@ mvn exec:java -Dexec.mainClass=org.the_project.y2012.pokemon.Fight
 Re-download dependencies:
 
 mvn dependency:purge-local-repository
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Projects
+
+    Upgrade Hibernate
+    Switch to Gradle
+
+
