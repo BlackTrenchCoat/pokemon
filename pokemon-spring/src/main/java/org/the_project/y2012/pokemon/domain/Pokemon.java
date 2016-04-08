@@ -814,9 +814,35 @@ public class Pokemon extends PokemonEntity {
             }
             break;
         case Growth:
-            logger.info("Growth not implemented yet.");
+            // Raises the user's [Attack]{mechanic:attack} and [Special
+            // Attack]{mechanic:special-attack} by one [stage]{mechanic:stage}
+            // each. During []{move:sunny-day}, raises both stats by two stages.
+            // TODO: Implement the Sunny Day part
+            // Effect
+            effectHappens = computeEffectChance(move);
+            if (effectHappens) {
+                // Increase attack and special attack one stage
+                double statsModifier = PokemonMath.statModifier(1);
+                defender.adjustAttack(statsModifier);
+                defender.adjustSpecialAttack(statsModifier);
+            }
             break;
         case Guillotine:
+            // Inflicts damage equal to the target's max [HP]{mechanic:hp}.
+            // Ignores [accuracy]{mechanic:accuracy} and
+            // [evasion]{mechanic:evasion} modifiers. This move's
+            // [accuracy]{mechanic:accuracy} is 30% plus 1% for each level the
+            // user is higher than the target. If the user is a lower level than
+            // the target, this move will [fail]{mechanic:fail}.
+
+            // Because this move inflicts a specific and finite amount of
+            // damage, []{move:endure} still prevents the target from fainting.
+
+            // The effects of []{move:lock-on}, []{move:mind-reader}, and
+            // []{ability:no-guard} still apply, as long as the user is equal or
+            // higher level than the target. However, they will not give this
+            // move a chance to break through []{move:detect} or
+            // []{move:protect}.
             logger.info("Guillotine not implemented yet.");
             break;
         case Gust:
