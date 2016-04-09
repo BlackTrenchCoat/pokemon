@@ -40,9 +40,9 @@
         <property name="driverClassName"
             value="${hibernate.connection.driver_class}" />
         <property name="url"
-            value="${pokedex.connection.url}" />
-        <property name="username" value="${pokedex.connection.username}" />
-        <property name="password" value="${pokedex.connection.password}" />
+            value="${hibernate.connection.url}" />
+        <property name="username" value="${hibernate.connection.username}" />
+        <property name="password" value="${hibernate.connection.password}" />
         <property name="initialSize" value="5" />
         <property name="maxActive" value="10" />
     </bean>
