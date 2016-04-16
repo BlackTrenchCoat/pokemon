@@ -1,7 +1,5 @@
 package org.theproject.browsepokemon.model;
 
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +11,6 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.theproject.browsepokemon.PokemonDisplayObject;
@@ -21,22 +18,22 @@ import org.theproject.browsepokemon.PokemonDisplayObject;
 import pokedex.PokemonSpecies;
 
 @Repository
-@Transactional
-public class PokedexDAOImpl implements PokedexDAO, Serializable {
+@Transactional(readOnly=true)
+public class PokedexDAOImpl implements PokedexDAO {
 
-    private static final long serialVersionUID = -5097470718065288080L;
-
-    private static transient Logger logger = LoggerFactory.getLogger(PokedexDAOImpl.class);
-
-    private transient SessionFactory sessionFactory;
-
-    public PokedexDAOImpl() {
-    }
+    private static Logger logger = LoggerFactory.getLogger(PokedexDAOImpl.class);
 
     @Autowired
-    public PokedexDAOImpl(@Qualifier("pokedexSessionFactory") SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private SessionFactory sessionFactory;
+
+//    public PokedexDAOImpl() {
+//    }
+//
+//    @Autowired
+//    public PokedexDAOImpl(SessionFactory sessionFactory) {
+//        logger.info("*** In the PokedexDAOImpl constructor.  sessionFactory = " + sessionFactory);
+//        this.sessionFactory = sessionFactory;
+//    }
 
     private Session currentSession() {
         return sessionFactory.getCurrentSession();
