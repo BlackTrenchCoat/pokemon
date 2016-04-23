@@ -24,7 +24,7 @@ import org.theproject.browsepokemon.service.PokedexServiceImpl;
 
 @Configuration
 @PropertySource({"classpath:hibernate.properties"})
-@ComponentScan(basePackages = "org.theproject.browsepokemon")
+@ComponentScan("org.theproject.browsepokemon")
 @EnableTransactionManagement
 public class ApplicationContextConfig {
     
