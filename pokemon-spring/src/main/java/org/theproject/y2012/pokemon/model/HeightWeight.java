@@ -1,4 +1,4 @@
-package org.the_project.y2012.pokemon.model;
+package org.theproject.y2012.pokemon.model;
 
 public class HeightWeight {
 

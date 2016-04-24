@@ -1,4 +1,4 @@
-package org.the_project.y2012.pokemon.domain;
+package org.theproject.y2012.pokemon.domain;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.floor;

@@ -1,8 +1,8 @@
-package org.the_project.y2012.pokemon.domain;
+package org.theproject.y2012.pokemon.domain;
 
 import static java.lang.Math.floor;
 import static java.lang.Math.max;
-import static org.the_project.y2012.pokemon.domain.PokemonMath.rnd;
+import static org.theproject.y2012.pokemon.domain.PokemonMath.rnd;
 
 import java.util.HashSet;
 import java.util.Set;

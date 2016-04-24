@@ -1,13 +1,13 @@
-package org.the_project.y2012.pokemon;
+package org.theproject.y2012.pokemon;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.the_project.y2012.pokemon.domain.Pokemon;
-import org.the_project.y2012.pokemon.domain.PokemonFactory;
-import org.the_project.y2012.pokemon.model.PokedexDAO;
-import org.the_project.y2012.pokemon.model.PokemonDAO;
+import org.theproject.y2012.pokemon.domain.Pokemon;
+import org.theproject.y2012.pokemon.domain.PokemonFactory;
+import org.theproject.y2012.pokemon.model.PokedexDAO;
+import org.theproject.y2012.pokemon.model.PokemonDAO;
 
 /**
  * Main program to create an initial population of pokemon and persist them to

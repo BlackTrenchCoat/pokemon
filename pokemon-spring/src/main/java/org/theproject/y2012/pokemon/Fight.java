@@ -1,6 +1,6 @@
-package org.the_project.y2012.pokemon;
+package org.theproject.y2012.pokemon;
 
-import static org.the_project.y2012.pokemon.domain.PokemonMath.rnd;
+import static org.theproject.y2012.pokemon.domain.PokemonMath.rnd;
 
 import java.util.List;
 import java.util.Set;
@@ -8,9 +8,9 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.the_project.y2012.pokemon.domain.Move;
-import org.the_project.y2012.pokemon.domain.Pokemon;
-import org.the_project.y2012.pokemon.model.PokemonDAO;
+import org.theproject.y2012.pokemon.domain.Move;
+import org.theproject.y2012.pokemon.domain.Pokemon;
+import org.theproject.y2012.pokemon.model.PokemonDAO;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package org.the_project.y2012.pokemon.model;
+package org.theproject.y2012.pokemon.model;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.the_project.y2012.pokemon.domain.Pokemon;
+import org.theproject.y2012.pokemon.domain.Pokemon;
 
 @Repository
 @Transactional

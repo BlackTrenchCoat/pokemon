@@ -12,7 +12,7 @@
 
     <description>Pokemon with 2012 Pokedex.</description>
 
-    <context:component-scan base-package="org.the_project.y2012" />
+    <context:component-scan base-package="org.theproject.y2012" />
     
     <!-- Use autowiring -->
     <context:annotation-config />
@@ -27,7 +27,7 @@
     <bean id="pokemonSessionFactory"
         class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="pokemonDataSource" />
-        <property name="packagesToScan" value="org.the_project.y2012.pokemon" />
+        <property name="packagesToScan" value="org.theproject.y2012.pokemon" />
         <property name="hibernateProperties">
             <props>
                 <prop key="dialect">${hibernate.dialect}</prop>
@@ -48,8 +48,8 @@
     
     <!-- DAOs -->
     
-    <bean id="pokemonDAO" class="org.the_project.y2012.pokemon.model.PokemonDAOImpl"/>
-    <bean id="pokedexDAO" class="org.the_project.y2012.pokemon.model.PokedexDAOImpl"/>
+    <bean id="pokemonDAO" class="org.theproject.y2012.pokemon.model.PokemonDAOImpl"/>
+    <bean id="pokedexDAO" class="org.theproject.y2012.pokemon.model.PokedexDAOImpl"/>
     
     <!-- Data sources -->
 

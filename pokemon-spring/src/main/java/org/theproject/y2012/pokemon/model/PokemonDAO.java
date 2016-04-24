@@ -1,8 +1,8 @@
-package org.the_project.y2012.pokemon.model;
+package org.theproject.y2012.pokemon.model;
 
 import java.util.List;
 
-import org.the_project.y2012.pokemon.domain.Pokemon;
+import org.theproject.y2012.pokemon.domain.Pokemon;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package org.the_project.y2012.pokemon.configuration;
+package org.theproject.y2012.pokemon.configuration;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;

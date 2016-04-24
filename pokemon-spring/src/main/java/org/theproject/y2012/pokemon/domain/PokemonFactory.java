@@ -1,6 +1,6 @@
-package org.the_project.y2012.pokemon.domain;
+package org.theproject.y2012.pokemon.domain;
 
-import static org.the_project.y2012.pokemon.domain.PokemonMath.rnd;
+import static org.theproject.y2012.pokemon.domain.PokemonMath.rnd;
 
 import java.util.List;
 import java.util.Map;
@@ -8,9 +8,9 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.transaction.annotation.Transactional;
-import org.the_project.y2012.pokemon.model.HeightWeight;
-import org.the_project.y2012.pokemon.model.PokedexDAO;
-import org.the_project.y2012.pokemon.model.SpeciesName;
+import org.theproject.y2012.pokemon.model.HeightWeight;
+import org.theproject.y2012.pokemon.model.PokedexDAO;
+import org.theproject.y2012.pokemon.model.SpeciesName;
 
 @Transactional
 public class PokemonFactory {

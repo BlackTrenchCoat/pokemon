@@ -1,10 +1,10 @@
-package org.the_project.y2012.pokemon.model;
+package org.theproject.y2012.pokemon.model;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.the_project.y2012.pokemon.domain.Move;
+import org.theproject.y2012.pokemon.domain.Move;
 
 import pokedex.Pokemon;
 import pokedex.PokemonSpecies;

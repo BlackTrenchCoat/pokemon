@@ -1,4 +1,4 @@
-package org.the_project.y2012.pokemon.domain;
+package org.theproject.y2012.pokemon.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

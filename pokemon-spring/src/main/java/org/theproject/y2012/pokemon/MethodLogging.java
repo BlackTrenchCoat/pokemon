@@ -1,4 +1,4 @@
-package org.the_project.y2012.pokemon;
+package org.theproject.y2012.pokemon;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MethodLogging {
 
-  @Around("execution(* org.the_project.y2012.pokemon..*.*(..))")
-  public Object logMethodCall(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Around("execution(* org.theproject.y2012.pokemon..*.*(..))")
+    public Object logMethodCall(ProceedingJoinPoint joinPoint) throws Throwable {
 
       String signature = joinPoint.getSignature().getName();
       String methodName;
