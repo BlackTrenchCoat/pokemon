@@ -23,7 +23,7 @@ import pokedex.Pokemon;
 import pokedex.PokemonSpecies;
 
 @Repository
-@Transactional
+@Transactional(readOnly=true)
 public class PokedexDAOImpl implements PokedexDAO {
     private static Logger logger = Logger.getLogger("PokedexDAO");
     
