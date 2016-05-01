@@ -50,7 +50,11 @@ public class WebFlowConfig extends AbstractFlowConfiguration {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jspx");
-        resolver.setExposeContextBeansAsAttributes(true); // ??
+        // "Set whether to make all Spring beans in the application context
+        // accessible as request attributes, through lazy checking once an
+        // attribute gets accessed."
+        // It seems to work fine without this
+//        resolver.setExposeContextBeansAsAttributes(true);
         return resolver;
     }
 
