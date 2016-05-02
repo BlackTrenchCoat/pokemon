@@ -55,10 +55,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     // Map paths directly to view names without controller processing. Use the
     // view-name attribute if necessary: by convention the view name equals the
     // path without the leading slash
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("intro");
-        registry.addViewController("/login");
-        registry.addViewController("/logoutSuccess");
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/").setViewName("intro");
+//        registry.addViewController("/login");
+//        registry.addViewController("/logoutSuccess");
+//    }
 }
