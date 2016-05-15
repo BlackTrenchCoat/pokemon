@@ -1,9 +1,10 @@
-package org.the_project.y2012.pokemon.domain;
+package org.theproject.y2012.pokemon.domain;
 
-import static org.junit.Assert.*;
 import static java.lang.Math.rint;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.theproject.y2012.pokemon.domain.PokemonMath;
 
 public class TestPokemonMath {
 
