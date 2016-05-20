@@ -21,9 +21,9 @@ mvn clean hibernate3:hbm2java compile hibernate3:hbm2cfgxml
 
 To run the main programs:
 
-mvn exec:java -Dexec.mainClass=org.the_project.y2012.pokemon.InitializePopulation
+mvn exec:java -Dexec.mainClass=org.theproject.y2012.pokemon.InitializePopulation
 
-mvn exec:java -Dexec.mainClass=org.the_project.y2012.pokemon.Fight
+mvn exec:java -Dexec.mainClass=org.theproject.y2012.pokemon.Fight
 
 Re-download dependencies:
 
