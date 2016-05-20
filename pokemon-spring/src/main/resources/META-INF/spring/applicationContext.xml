@@ -12,10 +12,10 @@
 
     <description>Pokemon with 2012 Pokedex.</description>
 
-    <context:component-scan base-package="org.theproject.y2012" />
+    <!-- Use AOP to do method logging -->
+<!--     <aop:aspectj-autoproxy/> -->
     
-    <!-- Use autowiring -->
-    <context:annotation-config />
+    <context:component-scan base-package="org.theproject.y2012" />
     
     <!-- Do exception translation for components annotated @Repository -->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
@@ -102,7 +102,4 @@
         <property name="sessionFactory" ref="pokemonSessionFactory" />
     </bean>
 
-    <!-- Use AOP to do method logging -->
-<!--     <aop:aspectj-autoproxy/> -->
-    
 </beans>
