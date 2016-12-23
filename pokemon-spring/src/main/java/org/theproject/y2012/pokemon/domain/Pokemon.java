@@ -17,6 +17,9 @@ public class Pokemon extends PokemonEntity {
     private static Logger logger = Logger.getLogger("Pokemon");
     
     public static void battle(Pokemon p1, Pokemon p2) {
+        
+        logger.info("In battle...");
+        
         p1.setAccuracy(0);
         p1.setEvasion(0);
         p2.setAccuracy(0);
