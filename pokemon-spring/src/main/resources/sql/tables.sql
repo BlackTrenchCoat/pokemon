@@ -3,9 +3,9 @@ use pokemon2012;
 drop table if exists move;
 
 create table move (
-	id int not null,			-- Unique automatically generated value
+	id int not null auto_increment, -- Unique automatically generated value
 	pokedex_id int not null,	-- pokedex.move.id
-	pokemon_id int,				-- FK to pokemon.id
+	pokemon_id int,                 -- FK to pokemon.id
 	name varchar(20),
 	power int,
 	pp int,
@@ -23,7 +23,7 @@ create table move (
 drop table if exists pokemon;
 
 create table pokemon (
-	id int not null,			-- Unique automatically generated value
+	id int not null auto_increment, -- Unique automatically generated value
 	pokedex_id int not null,	-- pokedex.pokemon.id
 	name varchar(20),
 	-- stats

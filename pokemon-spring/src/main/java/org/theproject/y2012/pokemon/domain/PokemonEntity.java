@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -16,7 +17,6 @@ import javax.persistence.Transient;
 import org.apache.log4j.Logger;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "pokemon")
@@ -24,9 +24,8 @@ public class PokemonEntity {
 
     private static Logger logger = Logger.getLogger("PokemonEntity");
     
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     int id;
     
     @Column(name = "pokedex_id")
