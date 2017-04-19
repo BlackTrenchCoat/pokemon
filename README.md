@@ -1,8 +1,8 @@
 pokemon
 =======
 
-Three Pokemon-related Spring and Hibernate projects based on
-Alex Munro's Pokedex database (See https://github.com/veekun/pokedex).
+Three Pokemon-related Spring projects based on Alex Munro's Pokedex
+database (See https://github.com/veekun/pokedex).
 
 pokemon-REST-API was written in 2017 and I am still tinkering with it.
 It uses modern tools and techniques such as Spring Boot, Spring Data JPA
