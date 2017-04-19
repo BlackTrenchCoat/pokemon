@@ -1,11 +1,16 @@
 pokemon
 =======
 
-Two Pokemon-related Spring and Hibernate projects based on
+Three Pokemon-related Spring and Hibernate projects based on
 Alex Munro's Pokedex database (See https://github.com/veekun/pokedex).
 
-These are spare-time projects from 2012 and 2013 which in a lot of ways
-don't represent modern best practices.
+pokemon-REST-API was written in 2017 and I am still tinkering with it.
+It uses modern tools and techniques such as Spring Boot, Spring Data JPA
+and @RestController.
+
+pokemon-spring and SpringWebFlowBrowsePokemon are spare-time projects
+from 2012 and 2013 which in a lot of ways don't represent modern best
+practices.
 
 Both were originally configured with a combination of annotations and
 XML.  In 2016 I rewrote SpringWebFlowBrowsePokemon to use Java
