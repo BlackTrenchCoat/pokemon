@@ -115,6 +115,16 @@ public class PokemonRestApiApplicationTests {
     }
     
     @Test
+    public void updatePokemon() throws Exception {
+        String pokemonJson = json(new Pokemon(150, pokemonName, 20, 1220, "psychic", null, "Genetic", 0, "beige",
+                null, 110, 90, 154, 90, 130, 106, 106, 0, 5));
+        mockMvc.perform(put("/pokemon/" + pokemonName)
+        .contentType(jsonContentType)
+        .content(pokemonJson))
+        .andExpect(status().isNoContent());
+    }
+    
+    @Test
     public void deletePokemon() throws Exception {
         mockMvc.perform(delete("/pokemon/" + pokemonName))
         .andExpect(status().isNoContent());
