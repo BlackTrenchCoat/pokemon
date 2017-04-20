@@ -54,11 +54,10 @@ public class PokemonController {
         response.addHeader("Location", getLocationForChildResource(request, newPokemon.getId()));
     }
 
-    @RequestMapping(value = "/pokemons", consumes = "application/json", method = RequestMethod.PUT)
+    @RequestMapping(value = "/pokemon/{name}", consumes = "application/json", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePokemon(@RequestBody Pokemon newPokemon, HttpServletRequest request,
-            HttpServletResponse response) {
-        String name = newPokemon.getName();
+    public void updatePokemon(@PathVariable(value = "name") String name, @RequestBody Pokemon newPokemon,
+            HttpServletRequest request, HttpServletResponse response) {
         log.info("*** In updatePokemon, updating " + name + "...");
         Pokemon oldPokemon = pokemonRepository.findByName(name);
         if (oldPokemon == null) {
