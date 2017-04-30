@@ -77,7 +77,18 @@ public class PokemonSpringDataRestApiApplicationTests {
     }
 
     @Test
-    public void readPokemon() throws Exception {
+    public void readPokemonById() throws Exception {
+        String pokemonIdString = this.pokemonList.get(0).getId().toString();
+        mockMvc.perform(get("/pokemons/" + pokemonIdString))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(jsonContentType))
+        .andExpect(jsonPath("$.type1", is("psychic")))
+        .andExpect(jsonPath("$.height", is(20)))
+        .andExpect(jsonPath("$.weight", is(1220)));
+    }
+    
+    @Test
+    public void readPokemonByName() throws Exception {
         mockMvc.perform(get("/pokemons/search/findByName?name=" + pokemonName))
         .andExpect(status().isOk())
         .andExpect(content().contentType(jsonContentType))
