@@ -1,0 +1,31 @@
+spring:
+  profiles:
+    active:
+      development
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: pokemon2012
+    password: pokemon2012
+  
+---
+
+spring:
+  profiles: development
+  datasource:
+    url: jdbc:mysql://localhost:3306/pokemon2012
+    
+---
+ 
+ spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://localhost:3306/pokemon2012_test
+    
+---
+ 
+#Hibernate Configuration:
+hibernate: 
+  dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  show_sql: true
+
+#entitymanager.packages.to.scan=com.spr.model
