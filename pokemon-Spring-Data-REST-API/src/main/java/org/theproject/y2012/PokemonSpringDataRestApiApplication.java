@@ -13,8 +13,6 @@ import org.springframework.http.MediaType;
 @SpringBootApplication
 public class PokemonSpringDataRestApiApplication {
     
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     public static void main(String[] args) {
         SpringApplication.run(PokemonSpringDataRestApiApplication.class, args);
     }
@@ -24,7 +22,6 @@ public class PokemonSpringDataRestApiApplication {
         return new RepositoryRestConfigurerAdapter() {
             @Override
             public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-                log.info("*** In configureRepositoryRestConfiguration() ***");
                 config.setDefaultMediaType(MediaType.APPLICATION_JSON);
             }
         };
