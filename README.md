@@ -1,12 +1,15 @@
 pokemon
 =======
 
-Three Pokemon-related Spring projects based on Alex Munro's Pokedex
+Four Pokemon-related Spring projects based on Alex Munro's Pokedex
 database (See https://github.com/veekun/pokedex).
 
 pokemon-REST-API was written in 2017 and I am still tinkering with it.
 It uses modern tools and techniques such as Spring Boot, Spring Data JPA
 and @RestController.
+
+In pokemon-Spring-Data-REST-API I reimplemented pokemon-REST-API using
+Spring Data REST.
 
 pokemon-spring and SpringWebFlowBrowsePokemon are spare-time projects
 from 2012 and 2013 which in a lot of ways don't represent modern best
