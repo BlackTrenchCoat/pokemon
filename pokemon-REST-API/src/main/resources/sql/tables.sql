@@ -1,6 +1,6 @@
 -- dev
 
-use pokemon2012_dev;
+use pokemon2012;
 
 drop table if exists move;
 
