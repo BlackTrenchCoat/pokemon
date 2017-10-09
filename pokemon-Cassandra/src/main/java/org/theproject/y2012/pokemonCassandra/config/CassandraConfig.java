@@ -11,7 +11,6 @@ import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
-import org.springframework.data.cassandra.core.mapping.BasicCassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
@@ -34,7 +33,7 @@ public class CassandraConfig {
     @Bean
     public CassandraMappingContext mappingContext() {
 
-        BasicCassandraMappingContext mappingContext =  new BasicCassandraMappingContext();
+        CassandraMappingContext mappingContext =  new CassandraMappingContext();
         mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cluster().getObject(), KEYSPACE_NAME));
 
         return mappingContext;
