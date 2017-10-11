@@ -4,10 +4,11 @@ package org.theproject.y2012.pokemonCassandra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.cassandra.config.AbstractCassandraConfiguration;
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean;
 import org.springframework.data.cassandra.config.CassandraSessionFactoryBean;
 import org.springframework.data.cassandra.config.SchemaAction;
-import org.springframework.data.cassandra.core.CassandraOperations;
+import org.springframework.data.cassandra.core.CassandraAdminOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
@@ -15,11 +16,17 @@ import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 
+import com.datastax.driver.core.Session;
+
+
 @Configuration
 @EnableCassandraRepositories(basePackages = { "org.theproject.y2012.pokemonCassandra" })
-public class CassandraConfig {
+public class CassandraConfig extends AbstractCassandraConfiguration {
 
-    private static final String KEYSPACE_NAME = "pokedex2012";
+    @Override
+    protected String getKeyspaceName() {
+        return "pokedex2012";
+    }
 
     @Bean
     public CassandraClusterFactoryBean cluster() {
@@ -34,7 +41,7 @@ public class CassandraConfig {
     public CassandraMappingContext mappingContext() {
 
         CassandraMappingContext mappingContext =  new CassandraMappingContext();
-        mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cluster().getObject(), KEYSPACE_NAME));
+        mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cluster().getObject(), getKeyspaceName()));
 
         return mappingContext;
     }
@@ -45,11 +52,11 @@ public class CassandraConfig {
     }
 
     @Bean
-    public CassandraSessionFactoryBean session() throws Exception {
+    public CassandraSessionFactoryBean session() {
 
         CassandraSessionFactoryBean session = new CassandraSessionFactoryBean();
         session.setCluster(cluster().getObject());
-        session.setKeyspaceName(KEYSPACE_NAME);
+        session.setKeyspaceName(getKeyspaceName());
         session.setConverter(converter());
         session.setSchemaAction(SchemaAction.NONE);
 
@@ -57,7 +64,16 @@ public class CassandraConfig {
     }
 
     @Bean
-    public CassandraOperations cassandraTemplate() throws Exception {
+    public CassandraTemplate cassandraTemplate(Session session) {
+        return new CassandraTemplate(session);
+    }
+
+
+/*
+    @Bean
+    public CassandraAdminOperations cassandraTemplate() {
         return new CassandraTemplate(session().getObject());
     }
+*/
+
 }
