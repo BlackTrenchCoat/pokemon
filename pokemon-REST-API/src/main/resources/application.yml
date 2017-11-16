@@ -6,7 +6,10 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: pokemon2012
     password: pokemon2012
-  
+management:
+  security:
+    enabled: false
+
 ---
 
 spring:
