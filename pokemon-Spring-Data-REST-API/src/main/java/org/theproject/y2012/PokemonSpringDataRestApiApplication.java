@@ -1,7 +1,5 @@
 package org.theproject.y2012;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +15,7 @@ public class PokemonSpringDataRestApiApplication {
         SpringApplication.run(PokemonSpringDataRestApiApplication.class, args);
     }
 
+    // Use application/json MIME type for REST responses instead of application/hal+json
     @Bean
     public RepositoryRestConfigurer repositoryRestConfigurer() {
         return new RepositoryRestConfigurerAdapter() {

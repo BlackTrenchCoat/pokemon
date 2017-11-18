@@ -67,23 +67,23 @@ public class PokemonRestApiApplicationTests {
     @Before
     public void setup() throws Exception {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        this.pokemonRepository.deleteAllInBatch();
+        this.pokemonRepository.deleteAll();
         this.pokemonList.add(pokemonRepository.save(
-                new Pokemon(150, pokemonName, 20, 1220, "psychic", null,
-                        "Genetic", 0, "purple", null, 110, 90, 154, 90,
-                        130, 106, 106, 0, 5)));
+                new Pokemon(150, pokemonName, 20, 1220,154, 90,
+                        106, 106,130, 5, "purple", 0, 0,
+                        null, 20,"Genetic", "psychic", null,1220)));
     }
     
     @Test
     public void pokemonNotFound() throws Exception {
-        mockMvc.perform(get("/pokemon/Snorlax"))
+        mockMvc.perform(get("/pokemonByName/Snorlax"))
         .andExpect(status().isNotFound())
         ;
     }
 
     @Test
     public void readPokemon() throws Exception {
-        mockMvc.perform(get("/pokemon/" + pokemonName))
+        mockMvc.perform(get("/pokemonByName/" + pokemonName))
         .andExpect(status().isOk())
         .andExpect(content().contentType(jsonContentType))
         .andExpect(jsonPath("$.id", is(this.pokemonList.get(0).getId().intValue())))
@@ -106,9 +106,10 @@ public class PokemonRestApiApplicationTests {
     
     @Test
     public void createPokemon() throws Exception {
-        String pokemonJson = json(new Pokemon(96, "Drowzee", 10, 324, "psychic", null,
-                "Hypnosis", 70, "yellow", null, 48, 45, 43, 90,
-                42, 60, 60, 0, 5));
+        String pokemonJson = json(new Pokemon(
+                96, "Drowzee", 48, 45, 43, 90,
+                60, 70, 42, 5, "yellow", 102, 70, "grassland",
+                10, "", "psychic", null, 324));
         mockMvc.perform(post("/pokemons")
                 .contentType(jsonContentType)
                 .content(pokemonJson))
@@ -117,8 +118,10 @@ public class PokemonRestApiApplicationTests {
     
     @Test
     public void updatePokemon() throws Exception {
-        String pokemonJson = json(new Pokemon(150, pokemonName, 20, 1220, "psychic", null, "Genetic", 0, "beige",
-                null, 110, 90, 154, 90, 130, 106, 106, 0, 5));
+        String pokemonJson = json(
+                new Pokemon(150, pokemonName, 20, 1220,154, 90,
+                        106, 106,130, 5, "purple", 0, 0,
+                        null, 20,"Genetic", "psychic", null,1220));
         mockMvc.perform(put("/pokemon/" + pokemonName)
         .contentType(jsonContentType)
         .content(pokemonJson))

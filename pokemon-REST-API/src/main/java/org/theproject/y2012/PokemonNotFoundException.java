@@ -10,4 +10,8 @@ public class PokemonNotFoundException extends RuntimeException {
         super("Pokemon named '" + name + "' was not found");
     }
 
+    PokemonNotFoundException(Long id) {
+        super("Pokemon with the id " + id + " was not found");
+    }
+
 }

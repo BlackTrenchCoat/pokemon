@@ -65,9 +65,9 @@ public class PokemonSpringDataRestApiApplicationTests {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         this.pokemonRepository.deleteAllInBatch();
         this.pokemonList.add(pokemonRepository.save(
-                new Pokemon(150, pokemonName, 20, 1220, "psychic", null,
-                        "Genetic", 0, "purple", null, 110, 90, 154, 90,
-                        130, 106, 106, 0, 5)));
+                new Pokemon(150, pokemonName, 20, 1220,154, 90,
+                        106, 106,130, 5, "purple", 0, 0,
+                        null, 20,"Genetic", "psychic", null,1220)));
     }
     
     @Test
@@ -110,9 +110,10 @@ public class PokemonSpringDataRestApiApplicationTests {
     
     @Test
     public void createPokemon() throws Exception {
-        String pokemonJson = json(new Pokemon(96, "Drowzee", 10, 324, "psychic", null,
-                "Hypnosis", 70, "yellow", null, 48, 45, 43, 90,
-                42, 60, 60, 0, 5));
+        String pokemonJson = json(new Pokemon(
+                96, "Drowzee", 48, 45, 43, 90,
+                60, 70, 42, 5, "yellow", 102, 70, "grassland",
+                10, "", "psychic", null, 324));
         mockMvc.perform(post("/pokemons")
                 .contentType(jsonContentType)
                 .content(pokemonJson))
@@ -121,8 +122,10 @@ public class PokemonSpringDataRestApiApplicationTests {
     
     @Test
     public void updatePokemon() throws Exception {
-        String pokemonJson = json(new Pokemon(150, pokemonName, 20, 1220, "psychic", null, "Genetic", 0, "beige",
-                null, 110, 90, 154, 90, 130, 106, 106, 0, 5));
+        String pokemonJson = json(
+                new Pokemon(150, pokemonName, 20, 1220,154, 90,
+                        106, 106,130, 5, "purple", 0, 0,
+                        null, 20,"Genetic", "psychic", null,1220));
         String pokemonIdString = this.pokemonList.get(0).getId().toString();
         mockMvc.perform(put("/pokemons/" + pokemonIdString)
         .contentType(jsonContentType)
