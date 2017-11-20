@@ -1,6 +1,19 @@
 package org.theproject.y2012.domain;
 
-import javax.persistence.*;
+import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 // JPA Named Query
@@ -60,6 +73,19 @@ public class Pokemon {
     public Long getId() {
         return id;
     }
+    
+    private Set<Move> moves;
+    
+    @OneToMany(mappedBy = "pokemonId", fetch = FetchType.LAZY)
+    @Cascade(CascadeType.ALL)
+    public Set<Move> getMoves() {
+        return moves;
+    }
+
+    public void setMoves(Set<Move> moves) {
+        this.moves = moves;
+    }
+
 
     public void setId(Long id) {
         this.id = id;

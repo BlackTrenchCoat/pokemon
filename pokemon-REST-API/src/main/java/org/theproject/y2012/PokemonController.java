@@ -139,15 +139,13 @@ public class PokemonController {
         return pokemonRepository.findByColorAndNameLike(color, name);
     }
 
-/*
-    @RequestMapping(value = "listMovesOfPokemonByName/{name}", produces = "application/json", method = RequestMethod.GET)
+    @RequestMapping(value = "/listMovesOfPokemonByName/{name}", produces = "application/json", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public Set<Move> listMovesOfPokemonByName(@PathVariable(value="name") String name) {
         Pokemon pokemon = pokemonRepository.findByName(name);
         Set<Move> moves = pokemon.getMoves();
         return moves;
     }
-*/
 
     private String getLocationForChildResource(HttpServletRequest request, Object childIdentifier) {
         StringBuffer url = request.getRequestURL();
