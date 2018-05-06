@@ -1,0 +1,6 @@
+CREATE TABLE move(id INTEGER NOT NULL ,pokedex_id INTEGER NOT NULL ,pokemon_id INTEGER,name VARCHAR(20),power INTEGER,pp INTEGER,accuracy INTEGER,damage_class VARCHAR(16),effect VARCHAR(5120),effect_chance INTEGER,level INTEGER,priority INTEGER,target VARCHAR(32),type VARCHAR(16), PRIMARY KEY (id) )
+CREATE TABLE pokemon(id INTEGER NOT NULL ,pokedex_id INTEGER NOT NULL ,name VARCHAR(20),attack INTEGER,defense INTEGER,special_attack INTEGER,special_defense INTEGER,hp INTEGER,max_hp INTEGER,speed INTEGER,level INTEGER,color VARCHAR(6),exp INTEGER,happiness INTEGER,habitat VARCHAR(16),height INTEGER,lock_on BIT,mind_reader BIT,nightmare BIT,non_volatile_status VARCHAR(10),perish_song BIT,species VARCHAR(16),taunt BIT,torment BIT,type1 VARCHAR(8),type2 VARCHAR(8),weight INTEGER,DTYPE VARCHAR(20), PRIMARY KEY (id) )
+--CREATE UNIQUE INDEX PRIMARY ON move(id)
+CREATE INDEX fk_move ON move(pokemon_id)
+ALTER TABLE move ADD CONSTRAINT fk_move FOREIGN KEY (pokemon_id) REFERENCES pokemon (id)
+--CREATE UNIQUE INDEX PRIMARY ON pokemon(id)

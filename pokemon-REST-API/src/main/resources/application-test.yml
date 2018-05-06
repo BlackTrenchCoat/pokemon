@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:hsqldb:mem:dataSource
+    
+hibernate:
+  dialect: org.hibernate.dialect.HSQLDialect
