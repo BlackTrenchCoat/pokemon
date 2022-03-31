@@ -9,7 +9,7 @@
 	<properties>
 		<slf4j.version>1.6.4</slf4j.version>
 		<hibernate.version>3.6.10.Final</hibernate.version>
-		<spring.framework.version>4.3.20.RELEASE</spring.framework.version>
+		<spring.framework.version>5.3.18</spring.framework.version>
 	</properties>
 	<!-- http://stackoverflow.com/questions/2083727/how-to-configure-maven-hbm2hbmxml-and-hbm2java-to-run-one-after-the-other-in-mvn -->
 	<build>
