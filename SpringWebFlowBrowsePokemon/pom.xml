@@ -15,7 +15,7 @@
         <org.aspectj-version>1.6.10</org.aspectj-version>
         <org.slf4j-version>1.6.6</org.slf4j-version>
         <webflow-version>2.4.0.RELEASE</webflow-version>
-        <hibernate.version>3.6.10.Final</hibernate.version>
+        <hibernate.version>5.3.20.Final</hibernate.version>
     </properties>
 
     <dependencies>
